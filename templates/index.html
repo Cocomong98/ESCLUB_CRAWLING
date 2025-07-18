@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FC 온라인 감독모드 크롤러</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>FC 온라인 감독모드 전적 크롤러</h1>
+            <p>urls.txt 파일에 URL을 한 줄씩 입력하고 '크롤링 시작' 버튼을 눌러주세요.</p>
+
+            <button id="startCrawlBtn">크롤링 시작</button>
+            <div id="statusMessage"></div>
+
+            <h2>크롤링 결과</h2>
+            <div id="resultsOutput">
+                <p>크롤링이 시작되면 여기에 결과가 표시됩니다.</p>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>
