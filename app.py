@@ -9,6 +9,7 @@ import time
 import re
 import os
 import json
+from datetime import datetime # datetime 모듈 임포트
 
 app = Flask(__name__)
 
@@ -23,12 +24,14 @@ OUTPUT_JSON_FILE = "fconline_manager_stats.json"
 def index():
     return render_template('index.html')
 
+# 새롭게 추가될 결과 테이블 페이지 라우트
+@app.route('/results_table')
+def results_table_page():
+    return render_template('results_table.html')
+
 # 크롤링 요청을 처리할 API 라우트
 @app.route('/crawl', methods=['POST'])
 def crawl_data():
-    # -------------------------------------------------------------
-    # urls.txt 파일에서 URL 목록 읽어오기 (기존 로직 재사용)
-    # -------------------------------------------------------------
     url_file_name = "urls.txt"
     target_urls = []
 
@@ -49,14 +52,10 @@ def crawl_data():
 
     print(f"웹 요청을 받았습니다. '{url_file_name}'에서 총 {len(target_urls)}개의 URL을 로드했습니다.")
 
-    # -------------------------------------------------------------
-    # Selenium 크롤링 로직 시작
-    # -------------------------------------------------------------
-
     all_results = []
     success_count = 0
     fail_count = 0
-    total_urls_count = len(target_urls) # 총 URL 개수
+    total_urls_count = len(target_urls)
 
     driver = None
     try:
@@ -70,19 +69,18 @@ def crawl_data():
         service = Service(executable_path=DRIVER_PATH)
         driver = webdriver.Chrome(service=service, options=options)
 
-        # enumerate를 사용하여 순번(index)을 가져옵니다.
         for index, url in enumerate(target_urls):
-            # -------------------------------------------------------------
-            # 터미널에 현재 처리 중인 순번 표시
             print(f"\n--- URL 처리 시작: {index + 1}/{total_urls_count} - {url} ---")
-            # -------------------------------------------------------------
 
             current_url_data = {
-                "URL": url, # 웹 페이지 결과 표시를 위해 URL은 포함 (JSON 저장 시에만 제외)
+                "URL": url,
                 "구단주명": "N/A",
                 "승": "N/A",
                 "무": "N/A",
-                "패": "N/A"
+                "패": "N/A",
+                "판수": "N/A",
+                "채굴 효율": "N/A",
+                "승률": "N/A"
             }
             url_processed_successfully = False
             
@@ -117,9 +115,20 @@ def crawl_data():
                 match = re.search(r'(\d+)승\s*(\d+)무\s*(\d+)패', full_text)
 
                 if match:
-                    current_url_data["승"] = int(match.group(1))
-                    current_url_data["무"] = int(match.group(2))
-                    current_url_data["패"] = int(match.group(3))
+                    win = int(match.group(1))
+                    draw = int(match.group(2))
+                    loss = int(match.group(3))
+                    
+                    total_games = win + draw + loss
+                    mining_efficiency = win * 7 + draw * 3 - loss
+                    win_rate = (win / total_games * 100) if total_games > 0 else 0.0
+                    
+                    current_url_data["승"] = win
+                    current_url_data["무"] = draw
+                    current_url_data["패"] = loss
+                    current_url_data["판수"] = total_games
+                    current_url_data["채굴 효율"] = mining_efficiency
+                    current_url_data["승률"] = f"{win_rate:.2f}%"
                 else:
                     print(f"{index + 1}/{total_urls_count} - 전적 정보를 찾을 수 없습니다.")
 
@@ -150,11 +159,11 @@ def crawl_data():
             driver.quit()
 
     # -------------------------------------------------------------
-    # JSON 파일 저장 로직
+    # JSON 파일 저장 로직 (URL 필드 제외)
     # -------------------------------------------------------------
     output_data_for_json = []
     for item in all_results:
-        json_item = {k: v for k, v in item.items() if k != "URL"} # JSON 저장 시 URL 필드 제외
+        json_item = {k: v for k, v in item.items() if k != "URL"}
         output_data_for_json.append(json_item)
 
     try:
@@ -164,12 +173,15 @@ def crawl_data():
     except Exception as e:
         print(f"JSON 파일 저장 중 오류 발생: {e}")
 
-    # 최종 결과를 웹 응답으로 반환
+    # -------------------------------------------------------------
+    # 최종 결과를 웹 응답으로 반환 (최신화 날짜 포함)
     return jsonify({
         "status": "success",
         "message": f"총 {total_urls_count}개 URL 중 {success_count}개 성공, {fail_count}개 실패.",
-        "results": all_results
+        "results": all_results,
+        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S") # 현재 시간 추가
     })
+    # -------------------------------------------------------------
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)

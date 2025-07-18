@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FC 온라인 감독모드 전적 상세 결과</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+        <style>
+            /* results_table.html 전용 스타일 추가 */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th,
+            td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+            th {
+                background-color: #007bff;
+                color: white;
+                white-space: nowrap;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            .error-row {
+                background-color: #f8d7da;
+                color: #d8000c;
+                font-weight: bold;
+            }
+            .update-info {
+                margin-top: 20px;
+                font-size: 0.9em;
+                color: #555;
+                text-align: center; /* 가운데 정렬 */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>FC 온라인 감독모드 전적 상세 결과</h1>
+            <p>크롤링된 데이터를 기반으로 계산된 전적 표입니다.</p>
+
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>구단주명</th>
+                        <th>승</th>
+                        <th>무</th>
+                        <th>패</th>
+                        <th>판수</th>
+                        <th>채굴 효율</th>
+                        <th>승률</th>
+                        <th>URL</th>
+                        <th>오류</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <p class="update-info" id="lastUpdatedInfo"></p>
+        </div>
+
+        <script src="{{ url_for('static', filename='results_table.js') }}"></script>
+    </body>
+</html>
