@@ -9,14 +9,14 @@ import time
 import re
 import os
 import json
-from datetime import datetime # datetime 모듈 임포트
+from datetime import datetime
 
 app = Flask(__name__)
 
-# 웹드라이버 경로 (app.py와 같은 폴더에 있다고 가정)
+# 웹드라이버 경로
 DRIVER_PATH = "./chromedriver"
 
-# 결과 저장 파일 경로 (app.py와 같은 폴더에 저장)
+# 결과 저장 파일 경로
 OUTPUT_JSON_FILE = "fconline_manager_stats.json"
 
 # 웹 페이지의 초기 로딩을 위한 라우트
@@ -24,38 +24,54 @@ OUTPUT_JSON_FILE = "fconline_manager_stats.json"
 def index():
     return render_template('index.html')
 
-# 새롭게 추가될 결과 테이블 페이지 라우트
 @app.route('/results_table')
 def results_table_page():
     return render_template('results_table.html')
 
-# 크롤링 요청을 처리할 API 라우트
 @app.route('/crawl', methods=['POST'])
 def crawl_data():
     url_file_name = "urls.txt"
-    target_urls = []
+    target_urls_with_annotation = []
 
     if not os.path.exists(url_file_name):
         return jsonify({"status": "error", "message": f"'{url_file_name}' 파일을 서버에서 찾을 수 없습니다."}), 500
 
     try:
+        # -------------------------------------------------------------
+        # URL과 각주를 별도 줄에서 파싱하는 로직 변경
+        current_annotation = ""
         with open(url_file_name, 'r', encoding='utf-8') as f:
             for line in f:
-                url = line.strip()
-                if url:
-                    target_urls.append(url)
+                stripped_line = line.strip()
+                if not stripped_line: # 빈 줄 건너뛰기
+                    continue
+
+                if stripped_line.startswith('//'): # "//"로 시작하면 각주로 간주
+                    current_annotation = stripped_line[2:].strip() # "//" 제거 후 공백 제거
+                elif stripped_line.startswith('#'): # 혹시 파이썬 스타일 주석도 처리하고 싶다면
+                    current_annotation = stripped_line[1:].strip()
+                elif stripped_line.startswith('http://') or stripped_line.startswith('https://'):
+                    url = stripped_line
+                    target_urls_with_annotation.append((url, current_annotation))
+                    current_annotation = "" # URL을 처리했으니 현재 각주 초기화
+                else: # 예상치 못한 형식의 줄 (무시하거나 오류 처리)
+                    print(f"경고: 알 수 없는 형식의 줄이 발견되었습니다: {stripped_line}")
+
+        # -------------------------------------------------------------
+
     except Exception as e:
         return jsonify({"status": "error", "message": f"URL 파일을 읽는 중 오류 발생: {str(e)}"}), 500
 
-    if not target_urls:
+    if not target_urls_with_annotation:
         return jsonify({"status": "warning", "message": f"'{url_file_name}' 파일에 유효한 URL이 없습니다."}), 200
 
-    print(f"웹 요청을 받았습니다. '{url_file_name}'에서 총 {len(target_urls)}개의 URL을 로드했습니다.")
+    total_urls_count = len(target_urls_with_annotation)
+    print(f"웹 요청을 받았습니다. '{url_file_name}'에서 총 {total_urls_count}개의 URL을 로드했습니다.")
 
     all_results = []
     success_count = 0
     fail_count = 0
-    total_urls_count = len(target_urls)
+    
 
     driver = None
     try:
@@ -69,11 +85,12 @@ def crawl_data():
         service = Service(executable_path=DRIVER_PATH)
         driver = webdriver.Chrome(service=service, options=options)
 
-        for index, url in enumerate(target_urls):
+        for index, (url, annotation) in enumerate(target_urls_with_annotation):
             print(f"\n--- URL 처리 시작: {index + 1}/{total_urls_count} - {url} ---")
 
             current_url_data = {
                 "URL": url,
+                "주석": annotation, # 주석 필드 추가
                 "구단주명": "N/A",
                 "승": "N/A",
                 "무": "N/A",
@@ -108,7 +125,7 @@ def crawl_data():
                 print(f"{index + 1}/{total_urls_count} - 감독 모드 데이터 로딩을 위해 10초 대기합니다...")
                 time.sleep(10)
 
-                grade_desc_element = WebDriverWait(driver, 10).until(
+                grade_desc_element = WebDriverWait(driver, 2).until(
                     EC.presence_of_element_located((By.CLASS_NAME, "grade_desc"))
                 )
                 full_text = grade_desc_element.text
@@ -132,7 +149,7 @@ def crawl_data():
                 else:
                     print(f"{index + 1}/{total_urls_count} - 전적 정보를 찾을 수 없습니다.")
 
-                coach_name_element = WebDriverWait(driver, 5).until(
+                coach_name_element = WebDriverWait(driver, 2).until(
                     EC.presence_of_element_located((By.CLASS_NAME, "coach"))
                 )
                 current_url_data["구단주명"] = coach_name_element.text
@@ -158,12 +175,10 @@ def crawl_data():
         if driver:
             driver.quit()
 
-    # -------------------------------------------------------------
-    # JSON 파일 저장 로직 (URL 필드 제외)
-    # -------------------------------------------------------------
     output_data_for_json = []
     for item in all_results:
-        json_item = {k: v for k, v in item.items() if k != "URL"}
+        # JSON 파일 저장 시 'URL'과 '주석' 필드 모두 제외
+        json_item = {k: v for k, v in item.items() if k not in ["URL", "주석"]}
         output_data_for_json.append(json_item)
 
     try:
@@ -173,15 +188,12 @@ def crawl_data():
     except Exception as e:
         print(f"JSON 파일 저장 중 오류 발생: {e}")
 
-    # -------------------------------------------------------------
-    # 최종 결과를 웹 응답으로 반환 (최신화 날짜 포함)
     return jsonify({
         "status": "success",
         "message": f"총 {total_urls_count}개 URL 중 {success_count}개 성공, {fail_count}개 실패.",
         "results": all_results,
-        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S") # 현재 시간 추가
+        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     })
-    # -------------------------------------------------------------
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
