@@ -1,0 +1,780 @@
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FC 온라인 감독모드 전적 상세 결과</title>
+        <link rel="stylesheet" href="/static/style.css" />
+        <style>
+            /* results_table.html 전용 스타일 추가 */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th,
+            td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+            th {
+                background-color: #007bff;
+                color: white;
+                white-space: nowrap;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            .error-row {
+                background-color: #f8d7da;
+                color: #d8000c;
+                font-weight: bold;
+            }
+            .update-info {
+                margin-top: 20px;
+                font-size: 0.9em;
+                color: #555;
+                text-align: center;
+            }
+            /* 두 테이블 사이 간격 */
+            .league-section {
+                margin-bottom: 40px;
+            }
+            .league-section h2 {
+                text-align: center;
+                margin-bottom: 15px;
+                color: #0056b3;
+            }
+            /* 비고 컬럼 색상 */
+            .rank-up {
+                color: red;
+                font-weight: bold;
+            }
+            .rank-down {
+                color: blue;
+                font-weight: bold;
+            }
+            .rank-no-change {
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>FC 온라인 감독모드 전적 상세 결과</h1>
+            <p>크롤링된 데이터를 기반으로 계산된 전적 표입니다.</p>
+
+            <div class="league-section">
+                <h2>1부리그 결과</h2>
+                <table id="league1Table">
+                    <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>비고</th>
+                            <th>구단주명</th>
+                            <th>판수</th>
+                            <th>승</th>
+                            <th>무</th>
+                            <th>패</th>
+                            <th>채굴 효율</th>
+                            <th>승률</th>
+                            <th>URL</th>
+                            <th>오류</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td>1</td>
+                            <td class="rank-no-change">-</td>
+                            <td>ES골팝</td>
+                            <td>2258</td>
+                            <td>1163</td>
+                            <td>70</td>
+                            <td>1025</td>
+                            <td>7326</td>
+                            <td>51.51%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1156043302"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1156043302"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>2</td>
+                            <td class="rank-no-change">-</td>
+                            <td>ES빼꼼</td>
+                            <td>2369</td>
+                            <td>1087</td>
+                            <td>246</td>
+                            <td>1036</td>
+                            <td>7311</td>
+                            <td>45.88%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1374062161"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1374062161"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>3</td>
+                            <td class="rank-no-change">-</td>
+                            <td>ES레지스타</td>
+                            <td>2322</td>
+                            <td>826</td>
+                            <td>675</td>
+                            <td>821</td>
+                            <td>6986</td>
+                            <td>35.57%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1005278322"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1005278322"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>4</td>
+                            <td class="rank-no-change">-</td>
+                            <td>ES가몸지</td>
+                            <td>2249</td>
+                            <td>960</td>
+                            <td>372</td>
+                            <td>917</td>
+                            <td>6919</td>
+                            <td>42.69%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1306797262"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1306797262"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>5</td>
+                            <td class="rank-no-change">-</td>
+                            <td>ES스페인</td>
+                            <td>2157</td>
+                            <td>1048</td>
+                            <td>150</td>
+                            <td>959</td>
+                            <td>6827</td>
+                            <td>48.59%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1038218816"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1038218816"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>6</td>
+                            <td class="rank-up">↑1</td>
+                            <td>ES멍웅찬</td>
+                            <td>2176</td>
+                            <td>1045</td>
+                            <td>149</td>
+                            <td>982</td>
+                            <td>6780</td>
+                            <td>48.02%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/350583720"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/350583720"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>7</td>
+                            <td class="rank-up">↑1</td>
+                            <td>ES린이대디</td>
+                            <td>2080</td>
+                            <td>975</td>
+                            <td>204</td>
+                            <td>901</td>
+                            <td>6536</td>
+                            <td>46.88%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/551649643"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/551649643"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>8</td>
+                            <td class="rank-up">↑1</td>
+                            <td>ES칼텍스</td>
+                            <td>2191</td>
+                            <td>950</td>
+                            <td>272</td>
+                            <td>969</td>
+                            <td>6497</td>
+                            <td>43.36%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1390518988"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1390518988"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>9</td>
+                            <td class="rank-up">↑1</td>
+                            <td>ES치악산</td>
+                            <td>2090</td>
+                            <td>981</td>
+                            <td>174</td>
+                            <td>935</td>
+                            <td>6454</td>
+                            <td>46.94%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/182966099"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/182966099"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>10</td>
+                            <td class="rank-up">↑3</td>
+                            <td>ES라야</td>
+                            <td>2065</td>
+                            <td>875</td>
+                            <td>348</td>
+                            <td>842</td>
+                            <td>6327</td>
+                            <td>42.37%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/350839137"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/350839137"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>11</td>
+                            <td class="rank-up">↑3</td>
+                            <td>FC플로버</td>
+                            <td>2038</td>
+                            <td>851</td>
+                            <td>387</td>
+                            <td>800</td>
+                            <td>6318</td>
+                            <td>41.76%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/887426261"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/887426261"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>12</td>
+                            <td class="rank-up">↑3</td>
+                            <td>ES타켠</td>
+                            <td>2054</td>
+                            <td>930</td>
+                            <td>217</td>
+                            <td>907</td>
+                            <td>6254</td>
+                            <td>45.28%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/31914083"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/31914083"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>13</td>
+                            <td class="rank-up">↑5</td>
+                            <td>ES구마적</td>
+                            <td>2023</td>
+                            <td>911</td>
+                            <td>207</td>
+                            <td>905</td>
+                            <td>6093</td>
+                            <td>45.03%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1776675411"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1776675411"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>14</td>
+                            <td class="rank-up">↑7</td>
+                            <td>ES노인</td>
+                            <td>1893</td>
+                            <td>850</td>
+                            <td>219</td>
+                            <td>824</td>
+                            <td>5783</td>
+                            <td>44.90%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1390789227"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1390789227"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>15</td>
+                            <td class="rank-up">↑8</td>
+                            <td>ES라울</td>
+                            <td>1642</td>
+                            <td>776</td>
+                            <td>206</td>
+                            <td>660</td>
+                            <td>5390</td>
+                            <td>47.26%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/82044429"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/82044429"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>16</td>
+                            <td class="rank-up">↑11</td>
+                            <td>ES갤럭시</td>
+                            <td>1433</td>
+                            <td>652</td>
+                            <td>184</td>
+                            <td>597</td>
+                            <td>4519</td>
+                            <td>45.50%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1139108503"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1139108503"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>17</td>
+                            <td class="rank-up">↑11</td>
+                            <td>ES베니</td>
+                            <td>1126</td>
+                            <td>528</td>
+                            <td>117</td>
+                            <td>481</td>
+                            <td>3566</td>
+                            <td>46.89%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1810251725"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1810251725"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="league1_summary_message" class="update-info">1부리그 : 총 17개 중 17개 성공, 0개 실패.</p>
+            </div>
+
+            <div class="league-section">
+                <h2>2부리그 결과</h2>
+                <table id="league2Table">
+                    <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>비고</th>
+                            <th>구단주명</th>
+                            <th>판수</th>
+                            <th>승</th>
+                            <th>무</th>
+                            <th>패</th>
+                            <th>채굴 효율</th>
+                            <th>승률</th>
+                            <th>URL</th>
+                            <th>오류</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td>1</td>
+                            <td class="rank-up">↑5</td>
+                            <td>ES사카</td>
+                            <td>2218</td>
+                            <td>808</td>
+                            <td>631</td>
+                            <td>779</td>
+                            <td>6770</td>
+                            <td>36.43%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/317123047"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/317123047"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>2</td>
+                            <td class="rank-up">↑9</td>
+                            <td>ES누고</td>
+                            <td>2060</td>
+                            <td>978</td>
+                            <td>169</td>
+                            <td>913</td>
+                            <td>6440</td>
+                            <td>47.48%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1877051658"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1877051658"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>3</td>
+                            <td class="rank-up">↑9</td>
+                            <td>ES실크</td>
+                            <td>2094</td>
+                            <td>960</td>
+                            <td>199</td>
+                            <td>935</td>
+                            <td>6382</td>
+                            <td>45.85%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1759588895"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1759588895"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>4</td>
+                            <td class="rank-up">↑12</td>
+                            <td>FC내미스</td>
+                            <td>2044</td>
+                            <td>920</td>
+                            <td>224</td>
+                            <td>900</td>
+                            <td>6212</td>
+                            <td>45.01%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1944734890"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1944734890"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>5</td>
+                            <td class="rank-up">↑12</td>
+                            <td>ES동천</td>
+                            <td>2050</td>
+                            <td>912</td>
+                            <td>234</td>
+                            <td>904</td>
+                            <td>6182</td>
+                            <td>44.49%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/334024467"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/334024467"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>6</td>
+                            <td class="rank-up">↑13</td>
+                            <td>ES소보</td>
+                            <td>2010</td>
+                            <td>876</td>
+                            <td>270</td>
+                            <td>864</td>
+                            <td>6078</td>
+                            <td>43.58%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/972001091"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/972001091"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>7</td>
+                            <td class="rank-up">↑13</td>
+                            <td>ES차오</td>
+                            <td>1971</td>
+                            <td>889</td>
+                            <td>173</td>
+                            <td>909</td>
+                            <td>5833</td>
+                            <td>45.10%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/551647116"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/551647116"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>8</td>
+                            <td class="rank-up">↑14</td>
+                            <td>ES방랑자</td>
+                            <td>1824</td>
+                            <td>838</td>
+                            <td>171</td>
+                            <td>815</td>
+                            <td>5564</td>
+                            <td>45.94%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1827232481"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1827232481"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>9</td>
+                            <td class="rank-up">↑15</td>
+                            <td>ES하은</td>
+                            <td>1773</td>
+                            <td>803</td>
+                            <td>172</td>
+                            <td>798</td>
+                            <td>5339</td>
+                            <td>45.29%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/569028919"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/569028919"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>10</td>
+                            <td class="rank-up">↑15</td>
+                            <td>ES코코몽</td>
+                            <td>1720</td>
+                            <td>799</td>
+                            <td>143</td>
+                            <td>778</td>
+                            <td>5244</td>
+                            <td>46.45%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1155593160"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1155593160"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>11</td>
+                            <td class="rank-up">↑15</td>
+                            <td>ES로운</td>
+                            <td>1469</td>
+                            <td>617</td>
+                            <td>265</td>
+                            <td>587</td>
+                            <td>4527</td>
+                            <td>42.00%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/65220999"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/65220999"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>12</td>
+                            <td class="rank-up">↑17</td>
+                            <td>ES딱풀또복</td>
+                            <td>969</td>
+                            <td>472</td>
+                            <td>99</td>
+                            <td>398</td>
+                            <td>3203</td>
+                            <td>48.71%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/618683725"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/618683725"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>13</td>
+                            <td class="rank-up">↑17</td>
+                            <td>ES휘뚤</td>
+                            <td>880</td>
+                            <td>425</td>
+                            <td>105</td>
+                            <td>350</td>
+                            <td>2940</td>
+                            <td>48.30%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/1759662886"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/1759662886"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>14</td>
+                            <td class="rank-up">↑17</td>
+                            <td>ES하냥</td>
+                            <td>121</td>
+                            <td>47</td>
+                            <td>33</td>
+                            <td>41</td>
+                            <td>387</td>
+                            <td>38.84%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/954913355"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/954913355"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>15</td>
+                            <td class="rank-up">↑17</td>
+                            <td>ES고민시</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0.00%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/2112569405"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/2112569405"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                        <tr class="">
+                            <td>16</td>
+                            <td class="rank-up">↑17</td>
+                            <td>ES페르난도</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0.00%</td>
+                            <td>
+                                <a
+                                    href="https://fconline.nexon.com/profile/stat/popup/870962590"
+                                    target="_blank"
+                                    title="https://fconline.nexon.com/profile/stat/popup/870962590"
+                                    >링크</a
+                                >
+                            </td>
+                            <td>성공</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="league2_summary_message" class="update-info">2부리그 : 총 16개 중 16개 성공, 0개 실패.</p>
+            </div>
+
+            <p class="update-info" id="lastUpdatedInfo">데이터 마지막 최신화: 2025-07-19 03:57:49</p>
+        </div>
+
+        <script src="/static/results_table.js"></script>
+    </body>
+</html>

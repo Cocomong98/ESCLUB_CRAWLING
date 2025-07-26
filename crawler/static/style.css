@@ -1,0 +1,205 @@
+/* 기본 공통 스타일 (기존 내용) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+    overflow-x: hidden; /* 전체 페이지 가로 스크롤 방지 */
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1,
+h2 {
+    color: #0056b3;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#statusMessage {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #d8000c; /* Error red */
+}
+
+#resultsOutput {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.result-item {
+    background-color: #e9f7ef;
+    border: 1px solid #d4edda;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.result-item.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.result-item p {
+    margin: 5px 0;
+}
+
+.result-item strong {
+    color: #0056b3;
+}
+
+/* results_table.html 전용 스타일 추가 (여기부터 옮겨진 내용 및 추가 개선) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed; /* 셀 너비를 고정하여 overflow-x 작동에 도움 */
+}
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    word-wrap: break-word; /* 긴 단어가 셀을 넘치지 않도록 줄바꿈 */
+    word-break: break-all; /* 더 강력한 줄바꿈 (URL 등) */
+}
+th {
+    background-color: #007bff;
+    color: white;
+    white-space: nowrap; /* 헤더 텍스트 줄바꿈 방지 */
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.error-row {
+    background-color: #f8d7da;
+    color: #d8000c;
+    font-weight: bold;
+}
+.update-info {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #555;
+    text-align: center;
+}
+.league-section {
+    margin-bottom: 40px;
+}
+.league-section h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #0056b3;
+}
+.rank-up {
+    color: red;
+    font-weight: bold;
+}
+.rank-down {
+    color: blue;
+    font-weight: bold;
+}
+.rank-no-change {
+    color: black;
+}
+
+/* 테이블 반응형을 위한 스타일 (강화) */
+.table-responsive {
+    overflow-x: auto; /* 내용이 넘칠 경우 가로 스크롤 허용 (핵심) */
+    -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 */
+    margin-bottom: 15px;
+}
+
+/* 미디어 쿼리: 작은 화면 (휴대폰) */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px; /* 컨테이너 좌우 패딩 줄임 */
+    }
+    h1 {
+        font-size: 1.6em; /* 제목 글자 크기 더 줄임 */
+    }
+    h2 {
+        font-size: 1.2em;
+    }
+    th,
+    td {
+        font-size: 0.75em; /* 테이블 글자 크기 더 줄임 */
+        padding: 5px; /* 셀 패딩 줄임 */
+    }
+
+    /* URL과 오류 컬럼 숨기기 */
+    #league1Table th:nth-child(10),
+    #league1Table td:nth-child(10),
+    #league2Table th:nth-child(10),
+    #league2Table td:nth-child(10),
+    #league1Table th:nth-child(11),
+    #league1Table td:nth-child(11),
+    #league2Table th:nth-child(11),
+    #league2Table td:nth-child(11) {
+        display: none;
+    }
+}
+
+/* 미디어 쿼리: 더 작은 화면 (매우 작은 휴대폰) */
+@media (max-width: 480px) {
+    th,
+    td {
+        font-size: 0.7em; /* 매우 작은 화면에서 글자 크기 더 줄임 */
+        padding: 3px;
+    }
+}
+
+/* 비고 컬럼에 대한 특정 스타일 - 너비 줄이기 */
+#league1Table th:nth-child(2),
+#league1Table td:nth-child(2),
+#league2Table th:nth-child(2),
+#league2Table td:nth-child(2) {
+    width: 5%; /* 기존 대비 1.5배 (예: 전체 100% 중 15% -> 22.5%) */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    word-wrap: normal; /* 이전 word-wrap 속성 무효화 */
+    word-break: normal; /* 이전 word-break 속성 무효화 */
+}
+
+/* 구단주명 컬럼에 대한 특정 스타일 - 너비 넓히기 */
+#league1Table th:nth-child(3),
+#league1Table td:nth-child(3),
+#league2Table th:nth-child(3),
+#league2Table td:nth-child(3) {
+    width: 15%; /* 기존 대비 1.5배 (예: 전체 100% 중 15% -> 22.5%) */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    word-wrap: normal; /* 이전 word-wrap 속성 무효화 */
+    word-break: normal; /* 이전 word-break 속성 무효화 */
+}
+
+/* URL 컬럼에 대한 특정 스타일 (선택 사항: URL이 너무 길 경우에도 한 줄로 유지 원할 때) */
+/* 이 부분은 미디어 쿼리 외부의 기본 스타일이며, 작은 화면에서는 위의 display: none; 에 의해 무시됩니다. */
+#league1Table th:nth-child(10),
+#league1Table td:nth-child(10),
+#league2Table th:nth-child(10),
+#league2Table td:nth-child(10) {
+    white-space: nowrap; /* URL 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨김 */
+    text-overflow: ellipsis; /* 넘치는 내용에 ... 표시 */
+    max-width: 120px; /* 최대 너비 지정 (선택 사항, 필요시) */
+}

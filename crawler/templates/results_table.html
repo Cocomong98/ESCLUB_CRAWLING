@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ESCLUB</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+        {#
+        <style>
+            ...;
+        </style>
+        태그와 그 안의 모든 내용 삭제 #}
+
+        <meta property="og:url" content="https://esclub.dothome.co.kr/miningleague.html" />
+        <meta property="og:title" content="ES클럽 채굴리그" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="ES클럽 감독모드 채굴리그" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>ES클럽 채굴리그</h1>
+            <p>크롤링된 데이터를 기반으로 계산된 전적 표입니다.</p>
+
+            <div class="league-section">
+                <h2>1부리그 결과</h2>
+                <div class="table-responsive">
+                    <table id="league1Table">
+                        <thead>
+                            <tr>
+                                <th>순위</th>
+                                <th>비고</th>
+                                <th>구단주명</th>
+                                <th>판수</th>
+                                <th>승</th>
+                                <th>무</th>
+                                <th>패</th>
+                                <th>채굴 효율</th>
+                                <th>승률</th>
+                                <th>URL</th>
+                                <th>오류</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {# ... Jinja2 렌더링 로직 (생략) ... #}
+                        </tbody>
+                    </table>
+                </div>
+                <p id="league1_summary_message" class="update-info"></p>
+            </div>
+
+            <div class="league-section">
+                <h2>2부리그 결과</h2>
+                <div class="table-responsive">
+                    <table id="league2Table">
+                        <thead>
+                            <tr>
+                                <th>순위</th>
+                                <th>비고</th>
+                                <th>구단주명</th>
+                                <th>판수</th>
+                                <th>승</th>
+                                <th>무</th>
+                                <th>패</th>
+                                <th>채굴 효율</th>
+                                <th>승률</th>
+                                <th>URL</th>
+                                <th>오류</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {# ... Jinja2 렌더링 로직 (생략) ... #}
+                        </tbody>
+                    </table>
+                </div>
+                <p id="league2_summary_message" class="update-info"></p>
+            </div>
+
+            <p class="update-info" id="lastUpdatedInfo">데이터 마지막 최신화: {{ last_updated }}</p>
+            <p class="update-info" id="lastUpdatedInfo">사이트 내 FC온라인 관련 모든 정보의 저작권은 EA Sports 및 NEXON에 있습니다.</p>
+        </div>
+
+        <script src="{{ url_for('static', filename='results_table.js') }}"></script>
+    </body>
+</html>
