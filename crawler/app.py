@@ -27,7 +27,7 @@ DISPLAY_JSON_FILE = "current_crawl_display_data.json"
 OUTPUT_HTML_FILE = "fconline_manager_stats.html"
 
 # 동시에 실행할 크롤링 작업 수
-MAX_WORKERS = 11
+MAX_WORKERS = 5
 
 # -------------------------------------------------------------
 # 헬퍼 함수: URL에서 플레이어 ID 추출 (예: '1155593160' 부분)
@@ -38,47 +38,37 @@ def _get_player_id_from_url(url):
     return None
 
 # -------------------------------------------------------------
-# 헬퍼 함수: 이전 결과 JSON 파일을 로드하고 플레이어 ID별 과거 순위 딕셔너리 반환 (통합)
-def _load_previous_results(json_file_path):
-    previous_ranks = {} # {player_id: rank, ...}
+# 헬퍼 함수: 이전 결과 JSON 파일을 로드하고 모든 데이터를 반환 (업데이트 로직을 위해)
+def _load_all_previous_data(json_file_path):
+    previous_data = {} # {player_id: {data}, ...}
     if os.path.exists(json_file_path):
         try:
             with open(json_file_path, 'r', encoding='utf-8') as f:
-                previous_data_combined = json.load(f)
-            
-            # 이전 데이터를 채굴 효율 기준으로 정렬하여 과거 순위 맵 생성
-            sorted_previous_data = sorted(
-                [item for item in previous_data_combined if "error" not in item], # 오류 없는 항목만 순위 산정에 포함
-                key=lambda x: (
-                    x.get('채굴 효율', -float('inf')) if isinstance(x.get('채굴 효율'), (int, float)) else -float('inf'),
-                    x.get('player_id', '') 
-                ),
-                reverse=True
-            )
-            
-            for rank, item in enumerate(sorted_previous_data, 1):
-                if 'player_id' in item:
-                    previous_ranks[item['player_id']] = rank
+                data = json.load(f)
+            for item in data:
+                player_id = item.get('player_id')
+                if player_id:
+                    previous_data[player_id] = item
         except json.JSONDecodeError as e:
             print(f"경고: 이전 JSON 파일을 읽는 중 오류 발생 (파일 손상?): {e}")
         except Exception as e:
             print(f"경고: 이전 결과 로드 중 알 수 없는 오류 발생: {e}")
-    return previous_ranks
+    return previous_data
 
 # -------------------------------------------------------------
 # 헬퍼 함수: Selenium 드라이버 초기화 (Headless 모드 등 옵션 포함)
 def _initialize_driver():
     options = Options()
-    options.add_argument("--headless")         # 브라우저 창을 띄우지 않음
-    options.add_argument("--disable-gpu")      # GPU 사용 비활성화 (Headless 모드에서 권장)
-    options.add_argument("--window-size=1920x1080") # 창 크기 설정 (Headless에서도 유효)
-    options.add_argument("--no-sandbox")       # Docker 또는 일부 서버 환경에서 필요
-    options.add_argument("--disable-dev-shm-usage") # Docker 또는 일부 서버 환경에서 필요
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920x1080")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     service = Service(executable_path=DRIVER_PATH)
     return webdriver.Chrome(service=service, options=options)
 
 # -------------------------------------------------------------
-# 헬퍼 함수: URL 파일 읽기 (주석 포함) (하나의 파일에서 읽도록 수정)
+# 헬퍼 함수: URL 파일 읽기 (주석 포함)
 def _read_urls_from_file(filename):
     urls_with_annotation = []
     current_annotation = ""
@@ -88,16 +78,16 @@ def _read_urls_from_file(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         for line in f:
             stripped_line = line.strip()
-            if not stripped_line: # 빈 줄 건너뛰기
+            if not stripped_line:
                 continue
-            if stripped_line.startswith('//'): # "//"로 시작하면 각주로 간주
-                current_annotation = stripped_line[2:].strip() # "//" 제거 후 공백 제거
-            elif stripped_line.startswith('#'): # 혹시 파이썬 스타일 주석도 처리하고 싶다면
+            if stripped_line.startswith('//'):
+                current_annotation = stripped_line[2:].strip()
+            elif stripped_line.startswith('#'):
                 current_annotation = stripped_line[1:].strip()
             elif stripped_line.startswith('http://') or stripped_line.startswith('https://'):
                 urls_with_annotation.append((stripped_line, current_annotation))
-                current_annotation = "" # URL을 처리했으니 현재 각주 초기화
-            else: # 예상치 못한 형식의 줄 (무시하거나 오류 처리)
+                current_annotation = ""
+            else:
                 print(f"경고 ({filename}): 알 수 없는 형식의 줄이 발견되었습니다: {stripped_line}")
     return urls_with_annotation
 
@@ -106,51 +96,43 @@ def _read_urls_from_file(filename):
 def _crawl_single_url(item_to_process):
     url = item_to_process['url']
     annotation = item_to_process['annotation']
-    # league_name은 더 이상 사용하지 않음 (통합이므로)
     
-    driver = None # 드라이버 초기화
+    driver = None
     
     player_id = _get_player_id_from_url(url)
     current_url_data = {
-        # "리그명": league_name, # 리그명 필드 제거 또는 '통합' 등으로 변경 가능
         "URL": url,
         "player_id": player_id,
         "주석": annotation,
         "구단주명": "N/A",
         "승": "N/A", "무": "N/A", "패": "N/A",
         "판수": "N/A", "채굴 효율": "N/A", "승률": "N/A",
-        "비고": "-" # 비고 초기값
+        "비고": "-"
     }
     
     print(f"--- [스레드-{os.getpid()}] 처리 시작: {url} ---")
     
     try:
-        driver = _initialize_driver() # 각 스레드에서 독립적인 드라이버 인스턴스 생성
+        driver = _initialize_driver()
         driver.get(url)
         
-        # 웹페이지 요소 로딩 및 클릭 (WebDriverWait 사용)
-        WebDriverWait(driver, 10 + 5).until( # 5초 추가
+        WebDriverWait(driver, 10 + 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, "selector_wrap"))
         )
-        # print(f"  [스레드-{os.getpid()}] 프로필 팝업 로드 완료.")
 
-        league_selector_link = WebDriverWait(driver, 5 + 5).until( # 5초 추가
+        league_selector_link = WebDriverWait(driver, 5 + 5).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "league"))
         )
         league_selector_link.click()
-        # print(f"  [스레드-{os.getpid()}] 드롭다운 펼침 완료.")
-        time.sleep(1 + 5) # 5초 추가
+        time.sleep(1 + 5)
 
-        manager_mode_tab = WebDriverWait(driver, 5 + 5).until( # 5초 추가
+        manager_mode_tab = WebDriverWait(driver, 5 + 5).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "a[onclick='SetType(52);']"))
         )
         manager_mode_tab.click()
-        # print(f"  [스레드-{os.getpid()}] 감독 모드 탭 클릭 완료.")
+        time.sleep(10 + 5)
 
-        # print(f"  [스레드-{os.getpid()}] 감독 모드 데이터 로딩을 위해 10초 대기합니다...")
-        time.sleep(10 + 5) # 5초 추가
-
-        grade_desc_element = WebDriverWait(driver, 10 + 5).until( # 5초 추가
+        grade_desc_element = WebDriverWait(driver, 10 + 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, "grade_desc"))
         )
         full_text = grade_desc_element.text
@@ -162,7 +144,6 @@ def _crawl_single_url(item_to_process):
             loss = int(match.group(3))
             
             total_games = win + draw + loss
-            # 채굴 효율 공식 수정 반영: 승리*7 - 무승부*3 - 패배
             mining_efficiency = win * 7 - draw * 3 - loss 
             win_rate = (win / total_games * 100) if total_games > 0 else 0.0
             
@@ -174,22 +155,20 @@ def _crawl_single_url(item_to_process):
             current_url_data["승률"] = f"{win_rate:.2f}%"
         else:
             print(f"  [스레드-{os.getpid()}] 전적 정보를 찾을 수 없습니다.")
+            current_url_data["error"] = "전적 정보 찾기 실패"
 
-        coach_name_element = WebDriverWait(driver, 5 + 5).until( # 5초 추가
+        coach_name_element = WebDriverWait(driver, 5 + 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, "coach"))
         )
         current_url_data["구단주명"] = coach_name_element.text
-        # print(f"  [스레드-{os.getpid()}] 구단주명 추출 완료.")
         
     except Exception as e:
-        # 오류 발생 시 오류 메시지 저장
         print(f"  [스레드-{os.getpid()}] URL({url}) 처리 중 오류 발생: {e}")
         current_url_data["error"] = str(e)
     
-    finally: # 각 스레드에서 사용한 드라이버는 반드시 종료
+    finally:
         if driver:
             driver.quit()
-            # print(f"  [스레드-{os.getpid()}] 드라이버 종료.")
     
     return current_url_data
 
@@ -222,16 +201,26 @@ def results_table_page():
 # 크롤링 요청을 처리할 API 라우트
 @app.route('/crawl', methods=['POST'])
 def crawl_data():
-    urls_file = "urls.txt" # 단일 URL 파일
+    urls_file = "urls.txt"
 
-    # 이전 결과 로드 (순위 비교를 위해)
-    previous_ranks = _load_previous_results(OUTPUT_JSON_FILE) # 이제 통합 순위 맵
-    if previous_ranks:
-        print(f"이전 결과 ({len(previous_ranks)}명) 로드 완료. 순위 비교를 수행합니다.")
+    # 이전 결과 로드 (업데이트 및 순위 비교를 위해 모든 데이터 로드)
+    previous_data_by_id = _load_all_previous_data(OUTPUT_JSON_FILE)
+    previous_ranks = {}
+    if previous_data_by_id:
+        # 순위 비교를 위한 이전 순위 맵 생성
+        sorted_previous_data = sorted(
+            [item for item in previous_data_by_id.values() if "error" not in item],
+            key=lambda x: (
+                x.get('채굴 효율', -float('inf')) if isinstance(x.get('채굴 효율'), (int, float)) else -float('inf'),
+                x.get('player_id', '')
+            ),
+            reverse=True
+        )
+        previous_ranks = {item['player_id']: rank for rank, item in enumerate(sorted_previous_data, 1)}
+        print(f"이전 결과 ({len(previous_data_by_id)}명) 로드 완료. 순위 비교를 수행합니다.")
     else:
         print("이전 결과 파일이 없거나 읽을 수 없습니다. 새로운 순위로 기록됩니다.")
 
-    # URL 파일에서 데이터 읽기
     urls_data = []
     try:
         urls_data = _read_urls_from_file(urls_file)
@@ -243,10 +232,8 @@ def crawl_data():
         print(f"오류: {e}")
         return jsonify({"status": "error", "message": f"{urls_file} 파일 읽기 오류: {str(e)}"}), 500
     
-    # 모든 URL을 단일 통합 리스트로 준비
     all_urls_to_process = []
     for url_tuple in urls_data:
-        # 통합이므로 리그명은 제거하고, 필요하면 '통합' 등으로 고정 가능
         all_urls_to_process.append({"url": url_tuple[0], "annotation": url_tuple[1]}) 
 
     total_urls_count = len(all_urls_to_process)
@@ -255,38 +242,80 @@ def crawl_data():
 
     print(f"웹 요청을 받았습니다. 총 {total_urls_count}개의 URL을 로드했습니다. {MAX_WORKERS}개씩 병렬 처리 시작.")
 
-    all_combined_results = [] # 각 URL별 스크랩된 원시 데이터를 저장 (순위 비교 전)
-    
-    # ThreadPoolExecutor를 사용하여 MAX_WORKERS 만큼의 워커(스레드)로 작업을 병렬 실행
+    crawled_results = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         for result in executor.map(_crawl_single_url, all_urls_to_process):
-            all_combined_results.append(result)
+            crawled_results.append(result)
 
+    # -------------------------------------------------------------
+    # 새로운 데이터와 기존 데이터 비교 및 업데이트 로직
+    # -------------------------------------------------------------
+    updated_results_map = {}
+    
+    # 1. 기존 데이터(이전 크롤링 결과)를 먼저 맵에 채움
+    for item in previous_data_by_id.values():
+        updated_results_map[item['player_id']] = item
+
+    # 2. 크롤링한 데이터(새로운 크롤링 결과)로 맵을 업데이트
+    #    (채굴 효율이 더 높은 경우에만 업데이트)
+    for new_item in crawled_results:
+        player_id = new_item.get('player_id')
+        if not player_id:
+            # player_id가 없는 데이터는 건너뜀
+            continue
+
+        if "error" in new_item:
+            # 새로운 크롤링 결과에 오류가 있다면 기존 데이터를 유지 (덮어쓰지 않음)
+            # 만약 기존 데이터도 없다면, 오류 데이터만 기록
+            if player_id not in updated_results_map:
+                updated_results_map[player_id] = new_item
+            continue
+
+        # 기존 데이터와 비교
+        if player_id in updated_results_map:
+            prev_item = updated_results_map[player_id]
+            # 채굴 효율이 숫자인지 확인 후 비교
+            prev_efficiency = prev_item.get('채굴 효율')
+            new_efficiency = new_item.get('채굴 효율')
+            
+            is_prev_valid = isinstance(prev_efficiency, (int, float))
+            is_new_valid = isinstance(new_efficiency, (int, float))
+            
+            # 이전 데이터가 유효하지 않으면 새 데이터로 무조건 업데이트
+            if not is_prev_valid:
+                updated_results_map[player_id] = new_item
+            # 이전 데이터와 새로운 데이터가 모두 유효하면, 더 높은 값으로 업데이트
+            elif is_prev_valid and is_new_valid and new_efficiency > prev_efficiency:
+                updated_results_map[player_id] = new_item
+            # 그 외의 경우 (새로운 데이터가 더 낮거나, 동점이거나)는 기존 데이터 유지
+        else:
+            # 기존 데이터에 없는 새로운 플레이어면 추가
+            updated_results_map[player_id] = new_item
+    
+    all_combined_results = list(updated_results_map.values())
+    
     # 순위 비교 및 '비고' 필드 계산 (통합 순위 계산)
     print("\n=== 순위 비교 및 '비고' 필드 계산 시작 (통합) ===")
     
-    final_processed_results = [] # 순위 비교 후 최종적으로 프론트엔드로 보낼 데이터
+    final_processed_results = []
     
-    # 현재 데이터의 순위를 계산 (오류 없는 항목만 순위 산정에 포함)
     current_ranked_data = sorted(
         [item for item in all_combined_results if "error" not in item],
         key=lambda x: (
             x.get('채굴 효율', -float('inf')) if isinstance(x.get('채굴 효율'), (int, float)) else -float('inf'),
-            x.get('player_id', '') # 채굴 효율 동점 시 player_id로 순서 고정
+            x.get('player_id', '')
         ),
-        reverse=True # 채굴 효율은 내림차순 (높을수록 상위)
+        reverse=True
     )
     
     current_ranks_map = {item['player_id']: rank for rank, item in enumerate(current_ranked_data, 1)}
 
-    for item in all_combined_results: # 원본 데이터(오류 포함)를 순회하며 비고 채우기
+    for item in all_combined_results:
         if "error" not in item and item['player_id'] in current_ranks_map:
             current_rank = current_ranks_map[item['player_id']]
-            
-            # 이전 순위가 있다면 비교
-            if item['player_id'] in previous_ranks: # 통합 순위 맵 사용
+            if item['player_id'] in previous_ranks:
                 prev_rank = previous_ranks[item['player_id']]
-                rank_diff = prev_rank - current_rank # 양수면 상승, 음수면 하락
+                rank_diff = prev_rank - current_rank
                 if rank_diff > 0:
                     item['비고'] = f"↑{rank_diff}"
                 elif rank_diff < 0:
@@ -294,13 +323,12 @@ def crawl_data():
                 else:
                     item['비고'] = "-"
             else:
-                item['비고'] = "New" # 이전 결과에 없는 새로운 플레이어
+                item['비고'] = "New"
         else:
-            item['비고'] = "오류" # 크롤링 중 오류가 발생했거나, 순위 계산에서 제외된 항목
+            item['비고'] = "오류"
 
         final_processed_results.append(item)
     
-    # 최종적으로 웹에 표시할 데이터를 채굴 효율 기준으로 한 번 더 정렬
     final_processed_results.sort(
         key=lambda x: (
             x.get('채굴 효율', -float('inf')) if isinstance(x.get('채굴 효율'), (int, float)) else -float('inf'),
@@ -309,18 +337,16 @@ def crawl_data():
         reverse=True
     )
 
-    # 전체 성공/실패 카운트 계산
-    success_count = sum(1 for item in all_combined_results if "error" not in item)
+    success_count = sum(1 for item in final_processed_results if "error" not in item)
     fail_count = total_urls_count - success_count
 
     # -------------------------------------------------------------
-    # 1. JSON 파일 저장 (다음 회차 비교를 위한 최소한의 데이터)
+    # 1. JSON 파일 저장
     output_data_for_json = [] 
     for item in final_processed_results:
         json_item = {
             "player_id": item.get("player_id"),
             "구단주명": item.get("구단주명"), 
-            # "리그명": item.get("리그명"), # 리그명 제거
             "승": item.get("승"),
             "무": item.get("무"),
             "패": item.get("패"),
@@ -369,7 +395,6 @@ def crawl_data():
         print(f"HTML 파일 저장 중 오류 발생: {e}")
     # -------------------------------------------------------------
 
-    # 최종 결과를 웹 응답으로 반환
     return jsonify({
         "status": "success",
         "message": f"총 {total_urls_count}개 URL 중 {success_count}개 성공, {fail_count}개 실패.",
