@@ -1,69 +1,100 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const resultsTableBody = document.querySelector("#resultsTable tbody");
-    const lastUpdatedInfo = document.getElementById("lastUpdatedInfo"); // 최신화 날짜 표시할 요소
+    const table = document.getElementById("mainTable");
+    const headers = table.querySelectorAll("th[data-sort-key]");
+    const tbody = table.querySelector("tbody");
 
-    const storedResults = localStorage.getItem("fconline_crawl_results");
-    const lastUpdatedTimestamp = localStorage.getItem("fconline_last_updated"); // 최신화 날짜 가져오기
-
-    if (storedResults) {
-        let results = JSON.parse(storedResults);
-
-        // -------------------------------------------------------------
-        // 채굴 효율 높은 순으로 정렬
-        results.sort((a, b) => {
-            const efficiencyA = typeof a["채굴 효율"] === "number" ? a["채굴 효율"] : -Infinity; // N/A는 가장 뒤로
-            const efficiencyB = typeof b["채굴 효율"] === "number" ? b["채굴 효율"] : -Infinity;
-            return efficiencyB - efficiencyA; // 내림차순 정렬 (높은 값이 먼저)
-        });
-        // -------------------------------------------------------------
-
-        let successCount = 0;
-        let failCount = 0;
-
-        resultsTableBody.innerHTML = ""; // 기존 내용 초기화
-
-        if (results.length > 0) {
-            results.forEach((item, index) => {
-                // index를 사용하여 순위 부여
-                const row = document.createElement("tr");
-                let rowClass = "";
-                if (item.error) {
-                    rowClass = "error-row";
-                    failCount++;
-                } else {
-                    successCount++;
-                }
-                row.className = rowClass;
-
-                row.innerHTML = `
-                    <td>${index + 1}</td> <td>${item.구단주명 || "N/A"}</td>
-                    <td>${item.승}</td>
-                    <td>${item.무}</td>
-                    <td>${item.패}</td>
-                    <td>${item.판수}</td>
-                    <td>${item["채굴 효율"]}</td>
-                    <td>${item["승률"]}</td>
-                    <td><a href="${item.URL}" target="_blank" title="${item.URL}">${item.URL ? "링크" : "N/A"}</a></td>
-                    <td>${item.error || "성공"}</td>
-                `;
-                resultsTableBody.appendChild(row);
-            });
-
-            // summaryMessage 대신 최신화 날짜 표시
-            if (lastUpdatedTimestamp) {
-                lastUpdatedInfo.textContent = `마지막 최신화: ${lastUpdatedTimestamp}`;
-            } else {
-                lastUpdatedInfo.textContent = `마지막 최신화: 정보 없음`;
-            }
-        } else {
-            resultsTableBody.innerHTML = '<tr><td colspan="10">표시할 결과가 없습니다.</td></tr>'; // colspan 조정
-            lastUpdatedInfo.textContent = "크롤링된 데이터가 없습니다.";
+    // 행 클릭 이벤트 리스너 추가
+    tbody.addEventListener("click", (event) => {
+        const clickedRow = event.target.closest("tr");
+        if (!clickedRow || clickedRow.classList.contains("error-row")) {
+            return;
         }
 
-        // localStorage 비우기는 여기서 하지 않는 것이 좋습니다.
-        // 사용자가 새 탭을 다시 열 때도 데이터를 볼 수 있어야 하므로.
-    } else {
-        resultsTableBody.innerHTML = '<tr><td colspan="10">표시할 데이터가 없습니다. 메인 페이지에서 크롤링을 시작해주세요.</td></tr>'; // colspan 조정
-        lastUpdatedInfo.textContent = "크롤링된 데이터가 localStorage에 없습니다. 메인 페이지에서 크롤링을 시작해주세요.";
+        // 모든 행의 'selected-row' 클래스 제거
+        tbody.querySelectorAll("tr").forEach((row) => {
+            row.classList.remove("selected-row");
+        });
+
+        // 클릭된 행에 'selected-row' 클래스 추가
+        clickedRow.classList.add("selected-row");
+    });
+
+    // 초기 상태: 비고, 에러 행, 구단주명 등 정렬에서 제외
+    const initialOrder = Array.from(tbody.querySelectorAll("tr"))
+        .filter((row) => !row.classList.contains("error-row"))
+        .map((row) => (row.dataset.originalIndex = row.rowIndex));
+
+    headers.forEach((header) => {
+        header.addEventListener("click", () => {
+            const sortKey = header.dataset.sortKey;
+            const sortDirection = header.dataset.sortDirection === "desc" ? "asc" : "desc";
+
+            // 모든 헤더의 정렬 상태 초기화
+            headers.forEach((h) => {
+                h.removeAttribute("data-sort-direction");
+                h.classList.remove("sorted-asc", "sorted-desc");
+            });
+
+            // 현재 헤더에 정렬 상태 설정
+            header.dataset.sortDirection = sortDirection;
+            header.classList.add(`sorted-${sortDirection}`);
+
+            sortTable(sortKey, sortDirection);
+        });
+    });
+
+    function sortTable(sortKey, sortDirection) {
+        const rows = Array.from(tbody.querySelectorAll("tr"));
+        const errorRows = rows.filter((row) => row.classList.contains("error-row"));
+        const dataRows = rows.filter((row) => !row.classList.contains("error-row"));
+
+        const sortedRows = dataRows.sort((a, b) => {
+            const aValue = getCellValue(a, sortKey);
+            const bValue = getCellValue(b, sortKey);
+
+            if (typeof aValue === "string") {
+                return sortDirection === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+            } else {
+                return sortDirection === "asc" ? aValue - bValue : bValue - aValue;
+            }
+        });
+
+        // 정렬된 행을 tbody에 다시 추가 (오류 행은 항상 마지막에)
+        tbody.innerHTML = "";
+        sortedRows.forEach((row) => tbody.appendChild(row));
+        errorRows.forEach((row) => tbody.appendChild(row));
+    }
+
+    function getCellValue(row, key) {
+        let value = null;
+        switch (key) {
+            case "순위":
+            case "판수":
+            case "채굴 효율":
+                value = parseInt(row.querySelector(`td:nth-child(${getColumnIndex(key)})`).textContent.replace(/,/g, ""), 10);
+                break;
+            case "승률":
+                value = parseFloat(row.querySelector(`td:nth-child(${getColumnIndex(key)})`).textContent.replace("%", ""));
+                break;
+            case "구단 가치":
+                const text = row.querySelector(`td:nth-child(${getColumnIndex(key)})`).textContent;
+                // 쉼표를 먼저 제거
+                const cleanText = text.replace(/,/g, "");
+                if (cleanText.includes("조")) {
+                    value = parseFloat(cleanText.replace("조", "")) * 10000;
+                } else if (cleanText.includes("억")) {
+                    value = parseFloat(cleanText.replace("억", ""));
+                }
+                break;
+            default:
+                value = row.querySelector(`td:nth-child(${getColumnIndex(key)})`).textContent.trim();
+        }
+        return value;
+    }
+
+    function getColumnIndex(key) {
+        const headers = Array.from(document.querySelectorAll("#mainTable th"));
+        const header = headers.find((h) => h.dataset.sortKey === key);
+        return header ? headers.indexOf(header) + 1 : -1;
     }
 });

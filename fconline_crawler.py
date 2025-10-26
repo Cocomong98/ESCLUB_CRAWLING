@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options # Options 모듈 임포트 추가
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
@@ -9,178 +9,169 @@ import re
 import os
 import json
 
-# 웹드라이버 경로
-driver_path = "./chromedriver"
+# --- 설정 ---
+DRIVER_PATH = "./chromedriver"
+URL_FILE_NAME = "urls.txt"
+OUTPUT_JSON_FILE = "fconline_manager_stats.json"
 
-# -------------------------------------------------------------
-# 처리할 URL 목록을 파일에서 읽어오기
-# -------------------------------------------------------------
-url_file_name = "urls.txt"
-target_urls = []
+def parse_urls(filename):
+    """
+    urls.txt 파일을 파싱하여 3줄(이름, 스탯URL, 스쿼드URL)을 하나의 그룹으로 묶어 리스트로 반환합니다.
+    """
+    managers = []
+    if not os.path.exists(filename):
+        print(f"오류: '{filename}' 파일을 찾을 수 없습니다.")
+        return managers
 
-if not os.path.exists(url_file_name):
-    print(f"오류: '{url_file_name}' 파일을 찾을 수 없습니다. 파일을 생성하고 URL을 입력해 주세요.")
-    exit()
+    with open(filename, 'r', encoding='utf-8') as f:
+        lines = [line.strip() for line in f if line.strip()]
 
-try:
-    with open(url_file_name, 'r', encoding='utf-8') as f:
-        for line in f:
-            url = line.strip()
-            if url:
-                target_urls.append(url)
-except Exception as e:
-    print(f"URL 파일을 읽는 중 오류 발생: {e}")
-    exit()
+    it = iter(lines)
+    for line1 in it:
+        try:
+            line2 = next(it)
+            line3 = next(it)
+            if line1.startswith('//') and 'stat/popup' in line2 and 'squad/popup' in line3:
+                user_code_match = re.search(r'/(\d+)$', line2)
+                if user_code_match:
+                    user_code = user_code_match.group(1)
+                    managers.append({
+                        "name": line1.replace('//', '').strip(),
+                        "user_code": user_code,
+                        "stat_url": line2,
+                        "squad_url": line3
+                    })
+        except StopIteration:
+            break
+    
+    print(f"'{filename}'에서 총 {len(managers)}명의 감독 정보를 로드했습니다.")
+    return managers
 
-if not target_urls:
-    print(f"경고: '{url_file_name}' 파일에 유효한 URL이 없습니다.")
-    exit()
-
-print(f"'{url_file_name}'에서 총 {len(target_urls)}개의 URL을 로드했습니다.")
-
-# -------------------------------------------------------------
-# 모든 URL에서 추출된 결과를 저장할 리스트 초기화
-all_results = []
-# 결과 요약 변수 추가
-success_count = 0
-fail_count = 0
-# -------------------------------------------------------------
-
-try:
-    # -------------------------------------------------------------
-    # Headless 모드 설정 추가
-    options = Options()
-    options.add_argument("--headless")         # 브라우저 창을 띄우지 않음
-    options.add_argument("--disable-gpu")      # GPU 사용 비활성화 (Headless 모드에서 권장)
-    options.add_argument("--window-size=1920x1080") # 창 크기 설정 (Headless에서도 유효)
-    # -------------------------------------------------------------
-
-    service = Service(executable_path=driver_path)
-    driver = webdriver.Chrome(service=service, options=options) # options 적용
-
-    for url in target_urls:
-        print(f"\n--- URL 처리 시작: {url} ---")
-
-        current_url_data = {
-            "구단주명": "N/A",
-            "승": "N/A",
-            "무": "N/A",
-            "패": "N/A"
-        }
-        
-        # -------------------------------------------------------------
-        # 각 URL 처리 성공 여부 트래킹
-        url_processed_successfully = False
-        # -------------------------------------------------------------
-
-        print("FC 온라인 프로필 페이지로 이동합니다...")
-        try: # 전체 크롤링 로직을 다시 한 번 try-except로 감싸서 특정 URL 실패 시 스킵 및 카운트
-            driver.get(url)
-
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "selector_wrap"))
-            )
-            print("프로필 팝업이 로드되었습니다.")
-
-            print("리그 선택 드롭다운을 펼칩니다...")
-            league_selector_link = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.CLASS_NAME, "league"))
-            )
-            league_selector_link.click()
-            print("드롭다운이 펼쳐졌습니다.")
-
-            time.sleep(1)
-
-            print("감독 모드 탭을 찾고 클릭합니다...")
-            manager_mode_tab = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, "a[onclick='SetType(52);']"))
-            )
-            manager_mode_tab.click()
-            print("감독 모드 탭을 클릭했습니다.")
-
-            print("감독 모드 데이터 로딩을 위해 10초 대기합니다...") # 이전 요청대로 10초 유지
-            time.sleep(10) # 10초 대기 (고정)
-
-            # -------------------------------------------------------------
-            # 4. '감독 모드' 선택 후 보이는 승/무/패 정보 가져오기
-            # -------------------------------------------------------------
-            print("감독 모드 전적 정보 추출 중...")
-            # grade_desc_element의 WebDriverWait 대기 시간을 1초에서 10초로 다시 늘립니다.
-            # 데이터 로딩 후 요소가 나타나는 시간은 충분히 주어야 합니다.
-            grade_desc_element = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "grade_desc"))
-            )
-            full_text = grade_desc_element.text
-            match = re.search(r'(\d+)승\s*(\d+)무\s*(\d+)패', full_text)
-
-            if match:
-                current_url_data["승"] = int(match.group(1))
-                current_url_data["무"] = int(match.group(2))
-                current_url_data["패"] = int(match.group(3))
-            else:
-                print("전적 정보를 찾을 수 없습니다.")
-
-            # -------------------------------------------------------------
-            # 5. 구단주명 가져오기
-            # -------------------------------------------------------------
-            print("구단주명 추출 중...")
-            # coach_name_element의 WebDriverWait 대기 시간을 1초에서 5초로 다시 늘립니다.
-            coach_name_element = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "coach"))
-            )
-            current_url_data["구단주명"] = coach_name_element.text
-
-            url_processed_successfully = True # 이 URL 처리 성공으로 표시
-
-        except Exception as e:
-            print(f"URL({url}) 처리 중 오류 발생: {e}")
-            # 이 URL에 대한 데이터는 기본값인 N/A로 남거나, 오류 메시지를 추가할 수 있습니다.
-            current_url_data["error"] = str(e) # 오류 메시지 저장
-            fail_count += 1
-            # continue # 오류가 나면 다음 URL로 넘어가기 (이 바깥 try-except가 처리)
-
-
-        # 최종 결과 출력 (콘솔)
-        print("\n--- FC 온라인 감독모드 전적 결과 ---")
-        print(f"URL: {url}") # URL은 터미널 출력용으로만 남겨둠
-        print(f"구단주명: {current_url_data['구단주명']}")
-        print(f"승: {current_url_data['승']}")
-        print(f"무: {current_url_data['무']}")
-        print(f"패: {current_url_data['패']}")
-        if "error" in current_url_data:
-            print(f"오류: {current_url_data['error']}")
-        print("----------------------------------")
-
-        # 현재 URL의 결과 데이터를 all_results 리스트에 추가
-        all_results.append(current_url_data)
-
-        if url_processed_successfully:
-            success_count += 1 # 성공 카운트 증가
-
-
-except Exception as e:
-    print(f"스크립트 실행 중 치명적인 오류 발생: {e}")
-
-finally:
-    print("\n모든 URL 처리 완료. 브라우저를 닫습니다.")
-    if 'driver' in locals():
-        driver.quit()
-
-    # -------------------------------------------------------------
-    # 추출된 모든 데이터를 JSON 파일로 저장 (기존 파일 자동 덮어쓰기)
-    # -------------------------------------------------------------
-    output_json_file = "fconline_manager_stats.json"
+def scrape_stat_data(driver, stat_url):
+    """
+    감독모드 전적 페이지에서 승, 무, 패 정보를 스크래핑합니다.
+    """
     try:
-        with open(output_json_file, 'w', encoding='utf-8') as f: # 'w' 모드는 항상 덮어씁니다.
+        print(f"전적 정보 처리 중... ({stat_url})")
+        driver.get(stat_url)
+        
+        # 리그 버튼 클릭
+        league_selector_link = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "league"))
+        )
+        league_selector_link.click()
+        
+        # 감독 모드 탭 클릭
+        manager_mode_tab = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "a[onclick='SetType(52);']"))
+        )
+        manager_mode_tab.click()
+        
+        # 전적 정보가 로드될 때까지 대기
+        grade_desc_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "grade_desc"))
+        )
+        
+        # time.sleep을 WebDriverWait으로 대체하여 안정성 향상
+        WebDriverWait(driver, 10).until(
+            lambda d: re.search(r'(\d+)승\s*(\d+)무\s*(\d+)패', d.find_element(By.CLASS_NAME, "grade_desc").text)
+        )
+
+        full_text = driver.find_element(By.CLASS_NAME, "grade_desc").text
+        match = re.search(r'(\d+)승\s*(\d+)무\s*(\d+)패', full_text)
+
+        if match:
+            return {
+                "승": int(match.group(1)),
+                "무": int(match.group(2)),
+                "패": int(match.group(3)),
+            }
+    except Exception as e:
+        print(f"전적 정보 처리 중 오류 발생: {e}")
+    return None
+
+def scrape_squad_value(driver, squad_url):
+    """
+    스쿼드 가치 페이지에서 구단 가치 정보를 스크래핑합니다.
+    대기 조건을 강화하여 안정성을 높입니다.
+    """
+    try:
+        print(f"스쿼드 가치 처리 중... ({squad_url})")
+        driver.get(squad_url)
+        
+        # "BP"라는 텍스트가 나타날 때까지 대기 (조건 강화)
+        squad_value_element = WebDriverWait(driver, 15).until(
+            EC.text_to_be_present_in_element(
+                (By.CSS_SELECTOR, "div.squad__info-panel__price p.txt strong"), 'BP'
+            )
+        )
+        squad_value = squad_value_element.text.strip()
+        print(f"-> 구단 가치 '{squad_value}' 추출 완료.")
+        return squad_value
+    except Exception as e:
+        print(f"-> 구단 가치 추출 실패: {e}")
+    return "0 BP" # 실패 시 기본값
+
+def main():
+    managers = parse_urls(URL_FILE_NAME)
+    if not managers:
+        return
+
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920x1080")
+    
+    service = Service(executable_path=DRIVER_PATH)
+    driver = None
+    
+    all_results = []
+    success_count = 0
+    fail_count = 0
+
+    try:
+        driver = webdriver.Chrome(service=service, options=options)
+        
+        for manager in managers:
+            print(f"\n--- '{manager['name']}' 감독 처리 시작 ---")
+            
+            stat_data = scrape_stat_data(driver, manager['stat_url'])
+            squad_value = scrape_squad_value(driver, manager['squad_url'])
+
+            if stat_data:
+                result = {
+                    "구단주명": manager['name'],
+                    "승": stat_data.get("승", "N/A"),
+                    "무": stat_data.get("무", "N/A"),
+                    "패": stat_data.get("패", "N/A"),
+                    "구단 가치": squad_value
+                }
+                all_results.append(result)
+                success_count += 1
+            else:
+                fail_count += 1
+
+    except Exception as e:
+        print(f"스크립트 실행 중 치명적인 오류 발생: {e}")
+    finally:
+        if driver:
+            driver.quit()
+        print("\n--- 크롤링 완료 ---")
+
+    # --- 최종 결과 저장 ---
+    try:
+        with open(OUTPUT_JSON_FILE, 'w', encoding='utf-8') as f:
             json.dump(all_results, f, indent=4, ensure_ascii=False)
-        print(f"\n모든 데이터가 '{output_json_file}' 파일에 성공적으로 저장되었습니다. (기존 파일 덮어쓰기)")
+        print(f"\n모든 데이터가 '{OUTPUT_JSON_FILE}' 파일에 성공적으로 저장되었습니다.")
     except Exception as e:
         print(f"JSON 파일 저장 중 오류 발생: {e}")
 
-    # -------------------------------------------------------------
-    # 종합 결과 보고
+    # --- 요약 보고 ---
     print("\n--- 크롤링 요약 ---")
-    print(f"총 처리 요청 URL 수: {len(target_urls)}")
-    print(f"성공적으로 처리된 URL 수: {success_count}")
-    print(f"처리 실패한 URL 수: {fail_count}")
+    print(f"총 감독 수: {len(managers)}")
+    print(f"성공: {success_count}")
+    print(f"실패: {fail_count}")
     print("------------------")
+
+if __name__ == "__main__":
+    main()

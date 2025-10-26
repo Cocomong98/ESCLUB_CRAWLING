@@ -1,0 +1,910 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ESCLUB</title>
+        <link rel="stylesheet" href="/static/style.css" />
+
+        <meta property="og:url" content="https://esclub.dothome.co.kr/miningleague.html" />
+        <meta property="og:title" content="ES클럽 채굴리그" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="ES클럽 감독모드 채굴리그" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>ES클럽 채굴리그 (통합)</h1>
+            <p>크롤링된 데이터를 기반으로 계산된 통합 전적 표입니다.</p>
+
+            <div class="kings-section">
+                <h2>지난 시즌 최고 기록</h2>
+                <div class="kings-grid">
+                    <div class="king-card">
+                        <h3>🏆 채굴왕</h3>
+                        <p><strong>ES골팝</strong></p>
+                        <p>19200 효율</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>👑 승률왕</h3>
+                        <p><strong>ES골팝</strong></p>
+                        <p>51.9%</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>🥇 판수왕</h3>
+                        <p><strong>ES맨유</strong></p>
+                        <p>6351 판</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>🔥 승부왕</h3>
+                        <p><strong>ES골팝</strong></p>
+                        <p>229 무승부</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="league-section">
+                <h2>전체 결과</h2>
+                <div class="table-responsive">
+                    <table id="mainTable">
+                        <thead>
+                            <tr>
+                                <th class="col-rank sortable" data-sort-key="순위">순위<span class="sort-icon"></span></th>
+                                <th class="col-remark">비고</th>
+                                <th class="col-owner-name">구단주명</th>
+                                <th class="sortable" data-sort-key="판수">판수<span class="sort-icon"></span></th>
+                                <th class="col-win-lose">승</th>
+                                <th class="col-win-lose">무</th>
+                                <th class="col-win-lose">패</th>
+                                <th class="col-record">전적</th>
+                                <th class="sortable" data-sort-key="채굴 효율">채굴 효율<span class="sort-icon"></span></th>
+                                <th class="sortable" data-sort-key="승률">승률<span class="sort-icon"></span></th>
+                                <th class="col-club-value sortable" data-sort-key="구단 가치">구단가치<span class="sort-icon"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+            <tr class="">
+                <td class="col-rank">1</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">FC멍찬</td>
+                <td>5502</td>
+                <td class="col-win-lose">2777</td>
+                <td class="col-win-lose">301</td>
+                <td class="col-win-lose">2424</td>
+                <td class="col-record">
+                    <span class="current-record">2777 / 301 / 2424</span>
+                    <span class="last-record" style="display:none;">3065 / 350 / 2738</span>
+                </td>
+                <td>
+                    <span class="current-mining">16112</span>
+                    <span class="last-mining" style="display:none;">17667</span>
+                </td>
+                <td>
+                    <span class="current-winrate">50.5%</span>
+                    <span class="last-winrate" style="display:none;">49.8%</span>
+                </td>
+                <td class="col-club-value">2,054조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">2</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES스페인</td>
+                <td>5546</td>
+                <td class="col-win-lose">2736</td>
+                <td class="col-win-lose">285</td>
+                <td class="col-win-lose">2525</td>
+                <td class="col-record">
+                    <span class="current-record">2736 / 285 / 2525</span>
+                    <span class="last-record" style="display:none;">2993 / 350 / 2746</span>
+                </td>
+                <td>
+                    <span class="current-mining">15772</span>
+                    <span class="last-mining" style="display:none;">17155</span>
+                </td>
+                <td>
+                    <span class="current-winrate">49.3%</span>
+                    <span class="last-winrate" style="display:none;">49.2%</span>
+                </td>
+                <td class="col-club-value">1,169조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">3</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES맨유</td>
+                <td>5662</td>
+                <td class="col-win-lose">2744</td>
+                <td class="col-win-lose">290</td>
+                <td class="col-win-lose">2628</td>
+                <td class="col-record">
+                    <span class="current-record">2744 / 290 / 2628</span>
+                    <span class="last-record" style="display:none;">3036 / 514 / 2801</span>
+                </td>
+                <td>
+                    <span class="current-mining">15710</span>
+                    <span class="last-mining" style="display:none;">16909</span>
+                </td>
+                <td>
+                    <span class="current-winrate">48.5%</span>
+                    <span class="last-winrate" style="display:none;">47.8%</span>
+                </td>
+                <td class="col-club-value">393조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">4</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES누고</td>
+                <td>5566</td>
+                <td class="col-win-lose">2647</td>
+                <td class="col-win-lose">373</td>
+                <td class="col-win-lose">2546</td>
+                <td class="col-record">
+                    <span class="current-record">2647 / 373 / 2546</span>
+                    <span class="last-record" style="display:none;">2878 / 373 / 2759</span>
+                </td>
+                <td>
+                    <span class="current-mining">14864</span>
+                    <span class="last-mining" style="display:none;">16268</span>
+                </td>
+                <td>
+                    <span class="current-winrate">47.6%</span>
+                    <span class="last-winrate" style="display:none;">47.9%</span>
+                </td>
+                <td class="col-club-value">545조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">5</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">FC내미스</td>
+                <td>5174</td>
+                <td class="col-win-lose">2600</td>
+                <td class="col-win-lose">395</td>
+                <td class="col-win-lose">2179</td>
+                <td class="col-record">
+                    <span class="current-record">2600 / 395 / 2179</span>
+                    <span class="last-record" style="display:none;">2579 / 398 / 2350</span>
+                </td>
+                <td>
+                    <span class="current-mining">14836</span>
+                    <span class="last-mining" style="display:none;">14509</span>
+                </td>
+                <td>
+                    <span class="current-winrate">50.3%</span>
+                    <span class="last-winrate" style="display:none;">48.4%</span>
+                </td>
+                <td class="col-club-value">1,586조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">6</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES골팝</td>
+                <td>5393</td>
+                <td class="col-win-lose">2595</td>
+                <td class="col-win-lose">274</td>
+                <td class="col-win-lose">2524</td>
+                <td class="col-record">
+                    <span class="current-record">2595 / 274 / 2524</span>
+                    <span class="last-record" style="display:none;">3236 / 229 / 2765</span>
+                </td>
+                <td>
+                    <span class="current-mining">14819</span>
+                    <span class="last-mining" style="display:none;">19200</span>
+                </td>
+                <td>
+                    <span class="current-winrate">48.1%</span>
+                    <span class="last-winrate" style="display:none;">51.9%</span>
+                </td>
+                <td class="col-club-value">1,792조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">7</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES차발</td>
+                <td>5379</td>
+                <td class="col-win-lose">2604</td>
+                <td class="col-win-lose">324</td>
+                <td class="col-win-lose">2451</td>
+                <td class="col-record">
+                    <span class="current-record">2604 / 324 / 2451</span>
+                    <span class="last-record" style="display:none;">2589 / 550 / 2421</span>
+                </td>
+                <td>
+                    <span class="current-mining">14805</span>
+                    <span class="last-mining" style="display:none;">14052</span>
+                </td>
+                <td>
+                    <span class="current-winrate">48.4%</span>
+                    <span class="last-winrate" style="display:none;">46.6%</span>
+                </td>
+                <td class="col-club-value">653조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">8</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES갤럭시</td>
+                <td>5525</td>
+                <td class="col-win-lose">2572</td>
+                <td class="col-win-lose">393</td>
+                <td class="col-win-lose">2560</td>
+                <td class="col-record">
+                    <span class="current-record">2572 / 393 / 2560</span>
+                    <span class="last-record" style="display:none;">2677 / 403 / 2510</span>
+                </td>
+                <td>
+                    <span class="current-mining">14265</span>
+                    <span class="last-mining" style="display:none;">15020</span>
+                </td>
+                <td>
+                    <span class="current-winrate">46.6%</span>
+                    <span class="last-winrate" style="display:none;">47.9%</span>
+                </td>
+                <td class="col-club-value">759조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">9</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES라야</td>
+                <td>5252</td>
+                <td class="col-win-lose">2491</td>
+                <td class="col-win-lose">340</td>
+                <td class="col-win-lose">2421</td>
+                <td class="col-record">
+                    <span class="current-record">2491 / 340 / 2421</span>
+                    <span class="last-record" style="display:none;">2438 / 544 / 2528</span>
+                </td>
+                <td>
+                    <span class="current-mining">13996</span>
+                    <span class="last-mining" style="display:none;">12906</span>
+                </td>
+                <td>
+                    <span class="current-winrate">47.4%</span>
+                    <span class="last-winrate" style="display:none;">44.2%</span>
+                </td>
+                <td class="col-club-value">1,009조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">10</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES가몸지</td>
+                <td>5197</td>
+                <td class="col-win-lose">2450</td>
+                <td class="col-win-lose">404</td>
+                <td class="col-win-lose">2343</td>
+                <td class="col-record">
+                    <span class="current-record">2450 / 404 / 2343</span>
+                    <span class="last-record" style="display:none;">2723 / 561 / 2673</span>
+                </td>
+                <td>
+                    <span class="current-mining">13595</span>
+                    <span class="last-mining" style="display:none;">14705</span>
+                </td>
+                <td>
+                    <span class="current-winrate">47.1%</span>
+                    <span class="last-winrate" style="display:none;">45.7%</span>
+                </td>
+                <td class="col-club-value">1,016조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">11</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES소보</td>
+                <td>4735</td>
+                <td class="col-win-lose">2358</td>
+                <td class="col-win-lose">311</td>
+                <td class="col-win-lose">2066</td>
+                <td class="col-record">
+                    <span class="current-record">2358 / 311 / 2066</span>
+                    <span class="last-record" style="display:none;">2528 / 463 / 2390</span>
+                </td>
+                <td>
+                    <span class="current-mining">13507</span>
+                    <span class="last-mining" style="display:none;">13917</span>
+                </td>
+                <td>
+                    <span class="current-winrate">49.8%</span>
+                    <span class="last-winrate" style="display:none;">47.0%</span>
+                </td>
+                <td class="col-club-value">1,501조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">12</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES차오</td>
+                <td>4955</td>
+                <td class="col-win-lose">2386</td>
+                <td class="col-win-lose">406</td>
+                <td class="col-win-lose">2163</td>
+                <td class="col-record">
+                    <span class="current-record">2386 / 406 / 2163</span>
+                    <span class="last-record" style="display:none;">2630 / 328 / 2405</span>
+                </td>
+                <td>
+                    <span class="current-mining">13321</span>
+                    <span class="last-mining" style="display:none;">15021</span>
+                </td>
+                <td>
+                    <span class="current-winrate">48.2%</span>
+                    <span class="last-winrate" style="display:none;">49.0%</span>
+                </td>
+                <td class="col-club-value">878조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">13</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES린이대디</td>
+                <td>4993</td>
+                <td class="col-win-lose">2317</td>
+                <td class="col-win-lose">483</td>
+                <td class="col-win-lose">2193</td>
+                <td class="col-record">
+                    <span class="current-record">2317 / 483 / 2193</span>
+                    <span class="last-record" style="display:none;">2569 / 400 / 2491</span>
+                </td>
+                <td>
+                    <span class="current-mining">12577</span>
+                    <span class="last-mining" style="display:none;">14292</span>
+                </td>
+                <td>
+                    <span class="current-winrate">46.4%</span>
+                    <span class="last-winrate" style="display:none;">47.1%</span>
+                </td>
+                <td class="col-club-value">2,154조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">14</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES라울</td>
+                <td>4171</td>
+                <td class="col-win-lose">2185</td>
+                <td class="col-win-lose">369</td>
+                <td class="col-win-lose">1617</td>
+                <td class="col-record">
+                    <span class="current-record">2185 / 369 / 1617</span>
+                    <span class="last-record" style="display:none;">2315 / 337 / 1995</span>
+                </td>
+                <td>
+                    <span class="current-mining">12571</span>
+                    <span class="last-mining" style="display:none;">13199</span>
+                </td>
+                <td>
+                    <span class="current-winrate">52.4%</span>
+                    <span class="last-winrate" style="display:none;">49.8%</span>
+                </td>
+                <td class="col-club-value">4,271조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">15</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES노인</td>
+                <td>4663</td>
+                <td class="col-win-lose">2218</td>
+                <td class="col-win-lose">312</td>
+                <td class="col-win-lose">2133</td>
+                <td class="col-record">
+                    <span class="current-record">2218 / 312 / 2133</span>
+                    <span class="last-record" style="display:none;">2217 / 349 / 2088</span>
+                </td>
+                <td>
+                    <span class="current-mining">12457</span>
+                    <span class="last-mining" style="display:none;">12384</span>
+                </td>
+                <td>
+                    <span class="current-winrate">47.6%</span>
+                    <span class="last-winrate" style="display:none;">47.6%</span>
+                </td>
+                <td class="col-club-value">2,761조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">16</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES실크</td>
+                <td>4794</td>
+                <td class="col-win-lose">2231</td>
+                <td class="col-win-lose">313</td>
+                <td class="col-win-lose">2250</td>
+                <td class="col-record">
+                    <span class="current-record">2231 / 313 / 2250</span>
+                    <span class="last-record" style="display:none;">2773 / 379 / 2532</span>
+                </td>
+                <td>
+                    <span class="current-mining">12428</span>
+                    <span class="last-mining" style="display:none;">15742</span>
+                </td>
+                <td>
+                    <span class="current-winrate">46.5%</span>
+                    <span class="last-winrate" style="display:none;">48.8%</span>
+                </td>
+                <td class="col-club-value">700조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">17</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES메가꿀아</td>
+                <td>4710</td>
+                <td class="col-win-lose">2228</td>
+                <td class="col-win-lose">364</td>
+                <td class="col-win-lose">2118</td>
+                <td class="col-record">
+                    <span class="current-record">2228 / 364 / 2118</span>
+                    <span class="last-record" style="display:none;">2481 / 297 / 2538</span>
+                </td>
+                <td>
+                    <span class="current-mining">12386</span>
+                    <span class="last-mining" style="display:none;">13938</span>
+                </td>
+                <td>
+                    <span class="current-winrate">47.3%</span>
+                    <span class="last-winrate" style="display:none;">46.7%</span>
+                </td>
+                <td class="col-club-value">475조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">18</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">FC플로버</td>
+                <td>5063</td>
+                <td class="col-win-lose">2291</td>
+                <td class="col-win-lose">444</td>
+                <td class="col-win-lose">2328</td>
+                <td class="col-record">
+                    <span class="current-record">2291 / 444 / 2328</span>
+                    <span class="last-record" style="display:none;">2506 / 616 / 2373</span>
+                </td>
+                <td>
+                    <span class="current-mining">12377</span>
+                    <span class="last-mining" style="display:none;">13321</span>
+                </td>
+                <td>
+                    <span class="current-winrate">45.2%</span>
+                    <span class="last-winrate" style="display:none;">45.6%</span>
+                </td>
+                <td class="col-club-value">1,333조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">19</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES구마적</td>
+                <td>4547</td>
+                <td class="col-win-lose">2125</td>
+                <td class="col-win-lose">300</td>
+                <td class="col-win-lose">2122</td>
+                <td class="col-record">
+                    <span class="current-record">2125 / 300 / 2122</span>
+                    <span class="last-record" style="display:none;">2530 / 413 / 2612</span>
+                </td>
+                <td>
+                    <span class="current-mining">11853</span>
+                    <span class="last-mining" style="display:none;">13859</span>
+                </td>
+                <td>
+                    <span class="current-winrate">46.7%</span>
+                    <span class="last-winrate" style="display:none;">45.5%</span>
+                </td>
+                <td class="col-club-value">1,431조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">20</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES올인</td>
+                <td>4797</td>
+                <td class="col-win-lose">2161</td>
+                <td class="col-win-lose">552</td>
+                <td class="col-win-lose">2084</td>
+                <td class="col-record">
+                    <span class="current-record">2161 / 552 / 2084</span>
+                    <span class="last-record" style="display:none;">1355 / 450 / 1200</span>
+                </td>
+                <td>
+                    <span class="current-mining">11387</span>
+                    <span class="last-mining" style="display:none;">6935</span>
+                </td>
+                <td>
+                    <span class="current-winrate">45.0%</span>
+                    <span class="last-winrate" style="display:none;">45.1%</span>
+                </td>
+                <td class="col-club-value">2,337조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">21</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES민이</td>
+                <td>5279</td>
+                <td class="col-win-lose">2276</td>
+                <td class="col-win-lose">775</td>
+                <td class="col-win-lose">2228</td>
+                <td class="col-record">
+                    <span class="current-record">2276 / 775 / 2228</span>
+                    <span class="last-record" style="display:none;">146 / 93 / 136</span>
+                </td>
+                <td>
+                    <span class="current-mining">11379</span>
+                    <span class="last-mining" style="display:none;">607</span>
+                </td>
+                <td>
+                    <span class="current-winrate">43.1%</span>
+                    <span class="last-winrate" style="display:none;">38.9%</span>
+                </td>
+                <td class="col-club-value">717조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">22</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES베니</td>
+                <td>4605</td>
+                <td class="col-win-lose">2122</td>
+                <td class="col-win-lose">518</td>
+                <td class="col-win-lose">1965</td>
+                <td class="col-record">
+                    <span class="current-record">2122 / 518 / 1965</span>
+                    <span class="last-record" style="display:none;">1284 / 224 / 1255</span>
+                </td>
+                <td>
+                    <span class="current-mining">11335</span>
+                    <span class="last-mining" style="display:none;">7061</span>
+                </td>
+                <td>
+                    <span class="current-winrate">46.1%</span>
+                    <span class="last-winrate" style="display:none;">46.5%</span>
+                </td>
+                <td class="col-club-value">2,920조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">23</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES칼텍스</td>
+                <td>5036</td>
+                <td class="col-win-lose">2191</td>
+                <td class="col-win-lose">591</td>
+                <td class="col-win-lose">2254</td>
+                <td class="col-record">
+                    <span class="current-record">2191 / 591 / 2254</span>
+                    <span class="last-record" style="display:none;">2630 / 460 / 2516</span>
+                </td>
+                <td>
+                    <span class="current-mining">11310</span>
+                    <span class="last-mining" style="display:none;">14514</span>
+                </td>
+                <td>
+                    <span class="current-winrate">43.5%</span>
+                    <span class="last-winrate" style="display:none;">46.9%</span>
+                </td>
+                <td class="col-club-value">1,634조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">24</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES빌바오</td>
+                <td>4764</td>
+                <td class="col-win-lose">2065</td>
+                <td class="col-win-lose">503</td>
+                <td class="col-win-lose">2196</td>
+                <td class="col-record">
+                    <span class="current-record">2065 / 503 / 2196</span>
+                    <span class="last-record" style="display:none;">2294 / 908 / 2466</span>
+                </td>
+                <td>
+                    <span class="current-mining">10750</span>
+                    <span class="last-mining" style="display:none;">10868</span>
+                </td>
+                <td>
+                    <span class="current-winrate">43.3%</span>
+                    <span class="last-winrate" style="display:none;">40.5%</span>
+                </td>
+                <td class="col-club-value">483조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">25</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES비야</td>
+                <td>5075</td>
+                <td class="col-win-lose">2137</td>
+                <td class="col-win-lose">843</td>
+                <td class="col-win-lose">2095</td>
+                <td class="col-record">
+                    <span class="current-record">2137 / 843 / 2095</span>
+                    <span class="last-record" style="display:none;">1024 / 527 / 986</span>
+                </td>
+                <td>
+                    <span class="current-mining">10335</span>
+                    <span class="last-mining" style="display:none;">4601</span>
+                </td>
+                <td>
+                    <span class="current-winrate">42.1%</span>
+                    <span class="last-winrate" style="display:none;">40.4%</span>
+                </td>
+                <td class="col-club-value">175조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">26</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES사카</td>
+                <td>4597</td>
+                <td class="col-win-lose">1989</td>
+                <td class="col-win-lose">725</td>
+                <td class="col-win-lose">1883</td>
+                <td class="col-record">
+                    <span class="current-record">1989 / 725 / 1883</span>
+                    <span class="last-record" style="display:none;">2261 / 1106 / 2251</span>
+                </td>
+                <td>
+                    <span class="current-mining">9865</span>
+                    <span class="last-mining" style="display:none;">10258</span>
+                </td>
+                <td>
+                    <span class="current-winrate">43.3%</span>
+                    <span class="last-winrate" style="display:none;">40.2%</span>
+                </td>
+                <td class="col-club-value">307조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">27</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES동천</td>
+                <td>4433</td>
+                <td class="col-win-lose">1909</td>
+                <td class="col-win-lose">582</td>
+                <td class="col-win-lose">1942</td>
+                <td class="col-record">
+                    <span class="current-record">1909 / 582 / 1942</span>
+                    <span class="last-record" style="display:none;">2546 / 614 / 2543</span>
+                </td>
+                <td>
+                    <span class="current-mining">9675</span>
+                    <span class="last-mining" style="display:none;">13437</span>
+                </td>
+                <td>
+                    <span class="current-winrate">43.1%</span>
+                    <span class="last-winrate" style="display:none;">44.6%</span>
+                </td>
+                <td class="col-club-value">62조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">28</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES컨</td>
+                <td>3909</td>
+                <td class="col-win-lose">1777</td>
+                <td class="col-win-lose">357</td>
+                <td class="col-win-lose">1775</td>
+                <td class="col-record">
+                    <span class="current-record">1777 / 357 / 1775</span>
+                    <span class="last-record" style="display:none;">1479 / 773 / 1464</span>
+                </td>
+                <td>
+                    <span class="current-mining">9593</span>
+                    <span class="last-mining" style="display:none;">6570</span>
+                </td>
+                <td>
+                    <span class="current-winrate">45.5%</span>
+                    <span class="last-winrate" style="display:none;">39.8%</span>
+                </td>
+                <td class="col-club-value">344조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">29</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES코코몽</td>
+                <td>3934</td>
+                <td class="col-win-lose">1751</td>
+                <td class="col-win-lose">479</td>
+                <td class="col-win-lose">1704</td>
+                <td class="col-record">
+                    <span class="current-record">1751 / 479 / 1704</span>
+                    <span class="last-record" style="display:none;">1940 / 280 / 1901</span>
+                </td>
+                <td>
+                    <span class="current-mining">9116</span>
+                    <span class="last-mining" style="display:none;">10839</span>
+                </td>
+                <td>
+                    <span class="current-winrate">44.5%</span>
+                    <span class="last-winrate" style="display:none;">47.1%</span>
+                </td>
+                <td class="col-club-value">401조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">30</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES봄날</td>
+                <td>3548</td>
+                <td class="col-win-lose">1677</td>
+                <td class="col-win-lose">399</td>
+                <td class="col-win-lose">1472</td>
+                <td class="col-record">
+                    <span class="current-record">1677 / 399 / 1472</span>
+                    <span class="last-record" style="display:none;">798 / 370 / 770</span>
+                </td>
+                <td>
+                    <span class="current-mining">9070</span>
+                    <span class="last-mining" style="display:none;">3706</span>
+                </td>
+                <td>
+                    <span class="current-winrate">47.3%</span>
+                    <span class="last-winrate" style="display:none;">41.2%</span>
+                </td>
+                <td class="col-club-value">1,114조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">31</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES진</td>
+                <td>4114</td>
+                <td class="col-win-lose">1670</td>
+                <td class="col-win-lose">705</td>
+                <td class="col-win-lose">1739</td>
+                <td class="col-record">
+                    <span class="current-record">1670 / 705 / 1739</span>
+                    <span class="last-record" style="display:none;">639 / 493 / 596</span>
+                </td>
+                <td>
+                    <span class="current-mining">7836</span>
+                    <span class="last-mining" style="display:none;">2398</span>
+                </td>
+                <td>
+                    <span class="current-winrate">40.6%</span>
+                    <span class="last-winrate" style="display:none;">37.0%</span>
+                </td>
+                <td class="col-club-value">571조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">32</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES아스널</td>
+                <td>2353</td>
+                <td class="col-win-lose">1093</td>
+                <td class="col-win-lose">242</td>
+                <td class="col-win-lose">1018</td>
+                <td class="col-record">
+                    <span class="current-record">1093 / 242 / 1018</span>
+                    <span class="last-record" style="display:none;">1236 / 255 / 1183</span>
+                </td>
+                <td>
+                    <span class="current-mining">5907</span>
+                    <span class="last-mining" style="display:none;">6704</span>
+                </td>
+                <td>
+                    <span class="current-winrate">46.5%</span>
+                    <span class="last-winrate" style="display:none;">46.2%</span>
+                </td>
+                <td class="col-club-value">1,414조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">33</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES아놀드</td>
+                <td>3584</td>
+                <td class="col-win-lose">1351</td>
+                <td class="col-win-lose">894</td>
+                <td class="col-win-lose">1339</td>
+                <td class="col-record">
+                    <span class="current-record">1351 / 894 / 1339</span>
+                    <span class="last-record" style="display:none;">2022 / 277 / 1961</span>
+                </td>
+                <td>
+                    <span class="current-mining">5436</span>
+                    <span class="last-mining" style="display:none;">11362</span>
+                </td>
+                <td>
+                    <span class="current-winrate">37.7%</span>
+                    <span class="last-winrate" style="display:none;">47.5%</span>
+                </td>
+                <td class="col-club-value">1,390조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">34</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES로운</td>
+                <td>2568</td>
+                <td class="col-win-lose">1079</td>
+                <td class="col-win-lose">402</td>
+                <td class="col-win-lose">1087</td>
+                <td class="col-record">
+                    <span class="current-record">1079 / 402 / 1087</span>
+                    <span class="last-record" style="display:none;">1510 / 776 / 1462</span>
+                </td>
+                <td>
+                    <span class="current-mining">5260</span>
+                    <span class="last-mining" style="display:none;">6780</span>
+                </td>
+                <td>
+                    <span class="current-winrate">42.0%</span>
+                    <span class="last-winrate" style="display:none;">40.3%</span>
+                </td>
+                <td class="col-club-value">2,237조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">35</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES휘뚤</td>
+                <td>1959</td>
+                <td class="col-win-lose">831</td>
+                <td class="col-win-lose">250</td>
+                <td class="col-win-lose">878</td>
+                <td class="col-record">
+                    <span class="current-record">831 / 250 / 878</span>
+                    <span class="last-record" style="display:none;">1138 / 284 / 1073</span>
+                </td>
+                <td>
+                    <span class="current-mining">4189</span>
+                    <span class="last-mining" style="display:none;">6041</span>
+                </td>
+                <td>
+                    <span class="current-winrate">42.4%</span>
+                    <span class="last-winrate" style="display:none;">45.6%</span>
+                </td>
+                <td class="col-club-value">2,005조</td>
+            </tr>
+            
+            <tr class="">
+                <td class="col-rank">36</td>
+                <td class="col-remark rank-up">New</td>
+                <td class="col-owner-name">ES클론</td>
+                <td>1719</td>
+                <td class="col-win-lose">712</td>
+                <td class="col-win-lose">333</td>
+                <td class="col-win-lose">674</td>
+                <td class="col-record">
+                    <span class="current-record">712 / 333 / 674</span>
+                    <span class="last-record" style="display:none;">368 / 373 / 360</span>
+                </td>
+                <td>
+                    <span class="current-mining">3311</span>
+                    <span class="last-mining" style="display:none;">1097</span>
+                </td>
+                <td>
+                    <span class="current-winrate">41.4%</span>
+                    <span class="last-winrate" style="display:none;">33.4%</span>
+                </td>
+                <td class="col-club-value">56조</td>
+            </tr>
+            
+                        </tbody>
+                    </table>
+                </div>
+                <p id="main_summary_message" class="update-info">
+                    총 36개 중 36개 성공, 0개 실패.
+                </p>
+            </div>
+
+            <p class="update-info" id="lastUpdatedInfo">데이터 마지막 최신화: 2025-10-21 03:04:39</p>
+            <p class="update-info" id="copyrightInfo">사이트 내 FC온라인 관련 모든 정보의 저작권은 EA Sports 및 NEXON에 있습니다.</p>
+        </div>
+
+        <script src="/static/results_table.js"></script>
+    </body>
+</html>
+    

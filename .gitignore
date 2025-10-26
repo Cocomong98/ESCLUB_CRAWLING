@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# macOS
+.DS_Store
+
+# Crawler specific generated files
+chromedriver
+LICENSE.chromedriver
+THIRD_PARTY_NOTICES.chromedriver
+current_crawl_display_data.json
+fconline_manager_stats.json
+
+# Data directories
+archive/
+user/
+
+# IDE specific files (e.g., VS Code)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

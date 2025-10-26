@@ -3,68 +3,102 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ES클럽 1부리그</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-        <style>
-            /* results_table.html 전용 스타일 추가 */
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-            th,
-            td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-            }
-            th {
-                background-color: #007bff;
-                color: white;
-                white-space: nowrap;
-            }
-            tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-            .error-row {
-                background-color: #f8d7da;
-                color: #d8000c;
-                font-weight: bold;
-            }
-            .update-info {
-                margin-top: 20px;
-                font-size: 0.9em;
-                color: #555;
-                text-align: center; /* 가운데 정렬 */
-            }
-        </style>
+        <title>ESCLUB</title>
+        <link rel="stylesheet" href="/static/style.css" />
+
+        <meta property="og:url" content="https://esclub.dothome.co.kr/miningleague.html" />
+        <meta property="og:title" content="ES클럽 채굴리그" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="ES클럽 감독모드 채굴리그" />
     </head>
     <body>
         <div class="container">
-            <h1>FC 온라인 감독모드 전적 상세 결과</h1>
-            <p>크롤링된 데이터를 기반으로 계산된 전적 표입니다.</p>
+            <h1>ES클럽 채굴리그 (통합)</h1>
+            <p>크롤링된 데이터를 기반으로 계산된 통합 전적 표입니다.</p>
 
-            <table id="resultsTable">
-                <thead>
-                    <tr>
-                        <th>순위</th>
-                        <th>구단주명</th>
-                        <th>승</th>
-                        <th>무</th>
-                        <th>패</th>
-                        <th>판수</th>
-                        <th>채굴 효율</th>
-                        <th>승률</th>
-                        <th>URL</th>
-                        <th>오류</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="kings-section">
+                <h2>지난 시즌 최고 기록</h2>
+                <div class="kings-grid">
+                    <div class="king-card">
+                        <h3>🏆 채굴왕</h3>
+                        <p><strong>{{ mining_king.구단주명 if mining_king else 'N/A' }}</strong></p>
+                        <p>{{ mining_king['지난 시즌 채굴 효율'] if mining_king else 'N/A' }} 효율</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>👑 승률왕</h3>
+                        <p><strong>{{ win_rate_king.구단주명 if win_rate_king else 'N/A' }}</strong></p>
+                        <p>{{ win_rate_king['지난 시즌 승률'] if win_rate_king else 'N/A' }}</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>🥇 판수왕</h3>
+                        <p><strong>{{ game_count_king.구단주명 if game_count_king else 'N/A' }}</strong></p>
+                        <p>{{ game_count_king['지난 시즌 판수'] if game_count_king else 'N/A' }} 판</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>🔥 승부왕</h3>
+                        <p><strong>{{ draw_king.구단주명 if draw_king else 'N/A' }}</strong></p>
+                        <p>{{ draw_king['지난 시즌 무'] if draw_king else 'N/A' }} 무승부</p>
+                    </div>
+                </div>
+            </div>
 
-            <p class="update-info" id="lastUpdatedInfo"></p>
+            <div class="league-section">
+                <h2>전체 결과</h2>
+                <div class="table-responsive">
+                    <table id="mainTable">
+                        <thead>
+                            <tr>
+                                <th class="col-rank sortable" data-sort-key="순위">순위<span class="sort-icon"></span></th>
+                                <th class="col-remark">비고</th>
+                                <th class="col-owner-name">구단주명</th>
+                                <th class="sortable" data-sort-key="판수">판수<span class="sort-icon"></span></th>
+                                <th class="col-win-lose">승</th>
+                                <th class="col-win-lose">무</th>
+                                <th class="col-win-lose">패</th>
+                                <th class="col-record">전적</th>
+                                <th class="sortable" data-sort-key="채굴 효율">채굴 효율<span class="sort-icon"></span></th>
+                                <th class="sortable" data-sort-key="승률">승률<span class="sort-icon"></span></th>
+                                <th class="col-club-value sortable" data-sort-key="구단 가치">구단가치<span class="sort-icon"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if results %} {% for item in results %} {% set row_class = "error-row" if item.error else "" %} {% set remark_class = "" %} {#
+                            순위 변동 수치(↑N, ↓N)에 따라 클래스 적용 #} {% if item.비고.startswith('↑') or item.비고 == 'New' %} {% set remark_class =
+                            "rank-up" %} {% elif item.비고.startswith('↓') %} {% set remark_class = "rank-down" %} {% elif item.비고 == '-' %} {% set
+                            remark_class = "rank-no-change" %} {% elif item.비고 == '오류' or item.비고.endswith('실패') %} {% set row_class = "error-row" %} {%
+                            endif %}
+
+                            <tr class="{{ row_class }}">
+                                <td class="col-rank">{{ item.순위 }}</td>
+                                <td class="col-remark {{ remark_class }}">{{ item.비고 }}</td>
+                                <td class="col-owner-name">{{ item.구단주명 }}</td>
+                                <td>{{ item.판수 }}</td>
+                                <td class="col-win-lose">{{ item.승 }}</td>
+                                <td class="col-win-lose">{{ item.무 }}</td>
+                                <td class="col-win-lose">{{ item.패 }}</td>
+                                <td class="col-record">{{ item.승 }} / {{ item.무 }} / {{ item.패 }}</td>
+                                <td>{{ item['채굴 효율'] }}</td>
+                                <td>{{ item['승률'] }}</td>
+                                <td class="col-club-value">{{ item['구단 가치'] }}</td>
+                            </tr>
+                            {% endfor %} {% else %}
+                            <tr>
+                                <td colspan="11">표시할 결과가 없습니다. 메인 페이지에서 크롤링을 시작해주세요.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <p id="main_summary_message" class="update-info">
+                    {% if results %} 총 {{ results|length }}개 중 {{ results | selectattr('error', 'undefined') | list | length }}개 성공, {{ results |
+                    selectattr('error', 'defined') | list | length }}개 실패. {% else %} 크롤링된 데이터가 없습니다. {% endif %}
+                </p>
+            </div>
+
+            <p class="update-info" id="lastUpdatedInfo">데이터 마지막 최신화: {{ last_updated }}</p>
+            <p class="update-info" id="copyrightInfo">사이트 내 FC온라인 관련 모든 정보의 저작권은 EA Sports 및 NEXON에 있습니다.</p>
         </div>
 
-        <script src="{{ url_for('static', filename='results_table.js') }}"></script>
+        <script src="/static/results_table.js"></script>
     </body>
 </html>

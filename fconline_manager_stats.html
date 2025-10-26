@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ESCLUB</title>
+        <link rel="stylesheet" href="/static/style.css" />
+
+        <meta property="og:url" content="https://esclub.dothome.co.kr/miningleague.html" />
+        <meta property="og:title" content="ES클럽 채굴리그" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="ES클럽 감독모드 채굴리그" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>ES클럽 채굴리그 (통합)</h1>
+            <p>크롤링된 데이터를 기반으로 계산된 통합 전적 표입니다.</p>
+
+            <div class="kings-section">
+                <h2>지난 시즌 최고 기록</h2>
+                <div class="kings-grid">
+                    <div class="king-card">
+                        <h3>🏆 채굴왕</h3>
+                        <p><strong>N/A</strong></p>
+                        <p>N/A 효율</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>👑 승률왕</h3>
+                        <p><strong>N/A</strong></p>
+                        <p>N/A</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>🥇 판수왕</h3>
+                        <p><strong>N/A</strong></p>
+                        <p>N/A 판</p>
+                    </div>
+                    <div class="king-card">
+                        <h3>🔥 승부왕</h3>
+                        <p><strong>N/A</strong></p>
+                        <p>N/A 무승부</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="league-section">
+                <h2>전체 결과</h2>
+                <div class="table-responsive">
+                    <table id="mainTable">
+                        <thead>
+                            <tr>
+                                <th class="col-rank">순위</th>
+                                <th class="col-remark">비고</th>
+                                <th class="col-owner-name">구단주명</th>
+                                <th>판수</th>
+                                <th class="col-win-lose">승</th>
+                                <th class="col-win-lose">무</th>
+                                <th class="col-win-lose">패</th>
+                                <th class="col-record">전적</th>
+                                <th>채굴 효율</th>
+                                <th>승률</th>
+                                <th class="col-url">URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="">
+                                <td class="col-rank">1</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES빼꼼</td>
+                                <td>575</td>
+                                <td class="col-win-lose">275</td>
+                                <td class="col-win-lose">43</td>
+                                <td class="col-win-lose">257</td>
+                                <td class="col-record">275 / 43 / 257</td>
+                                <td>1539</td>
+                                <td>47.8%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1374062161"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1374062161"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">2</td>
+                                <td class="col-remark rank-up">↑1</td>
+                                <td class="col-owner-name">ES실크</td>
+                                <td>548</td>
+                                <td class="col-win-lose">266</td>
+                                <td class="col-win-lose">63</td>
+                                <td class="col-win-lose">219</td>
+                                <td class="col-record">266 / 63 / 219</td>
+                                <td>1454</td>
+                                <td>48.5%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1759588895"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1759588895"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">3</td>
+                                <td class="col-remark rank-down">↓1</td>
+                                <td class="col-owner-name">ES스페인</td>
+                                <td>572</td>
+                                <td class="col-win-lose">271</td>
+                                <td class="col-win-lose">71</td>
+                                <td class="col-win-lose">230</td>
+                                <td class="col-record">271 / 71 / 230</td>
+                                <td>1454</td>
+                                <td>47.4%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1038218816"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1038218816"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">4</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES차발</td>
+                                <td>539</td>
+                                <td class="col-win-lose">252</td>
+                                <td class="col-win-lose">53</td>
+                                <td class="col-win-lose">234</td>
+                                <td class="col-record">252 / 53 / 234</td>
+                                <td>1371</td>
+                                <td>46.8%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1793437746"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1793437746"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">5</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">FC멍찬</td>
+                                <td>552</td>
+                                <td class="col-win-lose">251</td>
+                                <td class="col-win-lose">78</td>
+                                <td class="col-win-lose">223</td>
+                                <td class="col-record">251 / 78 / 223</td>
+                                <td>1300</td>
+                                <td>45.5%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/350583720"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/350583720"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">6</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES골팝</td>
+                                <td>524</td>
+                                <td class="col-win-lose">246</td>
+                                <td class="col-win-lose">73</td>
+                                <td class="col-win-lose">205</td>
+                                <td class="col-record">246 / 73 / 205</td>
+                                <td>1298</td>
+                                <td>46.9%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1156043302"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1156043302"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">7</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES누고</td>
+                                <td>526</td>
+                                <td class="col-win-lose">241</td>
+                                <td class="col-win-lose">63</td>
+                                <td class="col-win-lose">222</td>
+                                <td class="col-record">241 / 63 / 222</td>
+                                <td>1276</td>
+                                <td>45.8%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1877051658"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1877051658"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">8</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES가몸지</td>
+                                <td>544</td>
+                                <td class="col-win-lose">241</td>
+                                <td class="col-win-lose">91</td>
+                                <td class="col-win-lose">212</td>
+                                <td class="col-record">241 / 91 / 212</td>
+                                <td>1202</td>
+                                <td>44.3%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1306797262"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1306797262"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">9</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES파급</td>
+                                <td>592</td>
+                                <td class="col-win-lose">246</td>
+                                <td class="col-win-lose">113</td>
+                                <td class="col-win-lose">233</td>
+                                <td class="col-record">246 / 113 / 233</td>
+                                <td>1150</td>
+                                <td>41.6%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1525532472"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1525532472"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">10</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES라야</td>
+                                <td>526</td>
+                                <td class="col-win-lose">226</td>
+                                <td class="col-win-lose">93</td>
+                                <td class="col-win-lose">207</td>
+                                <td class="col-record">226 / 93 / 207</td>
+                                <td>1096</td>
+                                <td>43.0%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/350839137"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/350839137"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">11</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES구마적</td>
+                                <td>531</td>
+                                <td class="col-win-lose">225</td>
+                                <td class="col-win-lose">103</td>
+                                <td class="col-win-lose">203</td>
+                                <td class="col-record">225 / 103 / 203</td>
+                                <td>1063</td>
+                                <td>42.4%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1776675411"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1776675411"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">12</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES하은</td>
+                                <td>531</td>
+                                <td class="col-win-lose">221</td>
+                                <td class="col-win-lose">120</td>
+                                <td class="col-win-lose">190</td>
+                                <td class="col-record">221 / 120 / 190</td>
+                                <td>997</td>
+                                <td>41.6%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/569028919"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/569028919"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">13</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES린이대디</td>
+                                <td>545</td>
+                                <td class="col-win-lose">222</td>
+                                <td class="col-win-lose">125</td>
+                                <td class="col-win-lose">198</td>
+                                <td class="col-record">222 / 125 / 198</td>
+                                <td>981</td>
+                                <td>40.7%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/551649643"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/551649643"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">14</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES노인</td>
+                                <td>479</td>
+                                <td class="col-win-lose">203</td>
+                                <td class="col-win-lose">108</td>
+                                <td class="col-win-lose">168</td>
+                                <td class="col-record">203 / 108 / 168</td>
+                                <td>929</td>
+                                <td>42.4%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1390789227"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1390789227"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">15</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES칼텍스</td>
+                                <td>584</td>
+                                <td class="col-win-lose">228</td>
+                                <td class="col-win-lose">156</td>
+                                <td class="col-win-lose">200</td>
+                                <td class="col-record">228 / 156 / 200</td>
+                                <td>928</td>
+                                <td>39.0%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1390518988"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1390518988"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">16</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES소보</td>
+                                <td>498</td>
+                                <td class="col-win-lose">202</td>
+                                <td class="col-win-lose">119</td>
+                                <td class="col-win-lose">177</td>
+                                <td class="col-record">202 / 119 / 177</td>
+                                <td>880</td>
+                                <td>40.6%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/972001091"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/972001091"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">17</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES치악산</td>
+                                <td>525</td>
+                                <td class="col-win-lose">206</td>
+                                <td class="col-win-lose">133</td>
+                                <td class="col-win-lose">186</td>
+                                <td class="col-record">206 / 133 / 186</td>
+                                <td>857</td>
+                                <td>39.2%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/182966099"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/182966099"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">18</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES갤럭시</td>
+                                <td>555</td>
+                                <td class="col-win-lose">212</td>
+                                <td class="col-win-lose">157</td>
+                                <td class="col-win-lose">186</td>
+                                <td class="col-record">212 / 157 / 186</td>
+                                <td>827</td>
+                                <td>38.2%</td>
+                                <td class="col-url"><a href="" target="_blank" title="">N/A</a></td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">19</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">FC내미스</td>
+                                <td>588</td>
+                                <td class="col-win-lose">218</td>
+                                <td class="col-win-lose">165</td>
+                                <td class="col-win-lose">205</td>
+                                <td class="col-record">218 / 165 / 205</td>
+                                <td>826</td>
+                                <td>37.1%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1944734890"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1944734890"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">20</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">FC플로버</td>
+                                <td>545</td>
+                                <td class="col-win-lose">206</td>
+                                <td class="col-win-lose">164</td>
+                                <td class="col-win-lose">175</td>
+                                <td class="col-record">206 / 164 / 175</td>
+                                <td>775</td>
+                                <td>37.8%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/887426261"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/887426261"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">21</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES동천</td>
+                                <td>462</td>
+                                <td class="col-win-lose">182</td>
+                                <td class="col-win-lose">121</td>
+                                <td class="col-win-lose">159</td>
+                                <td class="col-record">182 / 121 / 159</td>
+                                <td>752</td>
+                                <td>39.4%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/334024467"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/334024467"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">22</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES빌바오</td>
+                                <td>531</td>
+                                <td class="col-win-lose">200</td>
+                                <td class="col-win-lose">160</td>
+                                <td class="col-win-lose">171</td>
+                                <td class="col-record">200 / 160 / 171</td>
+                                <td>749</td>
+                                <td>37.7%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1005278322"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1005278322"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">23</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES차오</td>
+                                <td>543</td>
+                                <td class="col-win-lose">200</td>
+                                <td class="col-win-lose">161</td>
+                                <td class="col-win-lose">182</td>
+                                <td class="col-record">200 / 161 / 182</td>
+                                <td>735</td>
+                                <td>36.8%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/551647116"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/551647116"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">24</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES라울</td>
+                                <td>435</td>
+                                <td class="col-win-lose">169</td>
+                                <td class="col-win-lose">109</td>
+                                <td class="col-win-lose">157</td>
+                                <td class="col-record">169 / 109 / 157</td>
+                                <td>699</td>
+                                <td>38.90%</td>
+                                <td class="col-url"><a href="" target="_blank" title="">N/A</a></td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">25</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES사카</td>
+                                <td>564</td>
+                                <td class="col-win-lose">193</td>
+                                <td class="col-win-lose">179</td>
+                                <td class="col-win-lose">192</td>
+                                <td class="col-record">193 / 179 / 192</td>
+                                <td>622</td>
+                                <td>34.2%</td>
+                                <td class="col-url"><a href="" target="_blank" title="">N/A</a></td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">26</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES베니</td>
+                                <td>533</td>
+                                <td class="col-win-lose">183</td>
+                                <td class="col-win-lose">169</td>
+                                <td class="col-win-lose">181</td>
+                                <td class="col-record">183 / 169 / 181</td>
+                                <td>593</td>
+                                <td>34.3%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1810251725"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1810251725"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">27</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES올인</td>
+                                <td>452</td>
+                                <td class="col-win-lose">162</td>
+                                <td class="col-win-lose">135</td>
+                                <td class="col-win-lose">155</td>
+                                <td class="col-record">162 / 135 / 155</td>
+                                <td>574</td>
+                                <td>35.8%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1356954590"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1356954590"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">28</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES방랑자</td>
+                                <td>288</td>
+                                <td class="col-win-lose">121</td>
+                                <td class="col-win-lose">70</td>
+                                <td class="col-win-lose">97</td>
+                                <td class="col-record">121 / 70 / 97</td>
+                                <td>540</td>
+                                <td>42.0%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1827232481"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1827232481"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">29</td>
+                                <td class="col-remark rank-up">↑1</td>
+                                <td class="col-owner-name">ES코코몽</td>
+                                <td>418</td>
+                                <td class="col-win-lose">148</td>
+                                <td class="col-win-lose">125</td>
+                                <td class="col-win-lose">145</td>
+                                <td class="col-record">148 / 125 / 145</td>
+                                <td>516</td>
+                                <td>35.4%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/1155593160"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/1155593160"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">30</td>
+                                <td class="col-remark rank-down">↓1</td>
+                                <td class="col-owner-name">ES로운</td>
+                                <td>292</td>
+                                <td class="col-win-lose">117</td>
+                                <td class="col-win-lose">72</td>
+                                <td class="col-win-lose">103</td>
+                                <td class="col-record">117 / 72 / 103</td>
+                                <td>500</td>
+                                <td>40.10%</td>
+                                <td class="col-url"><a href="" target="_blank" title="">N/A</a></td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">31</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES딱풀또복</td>
+                                <td>252</td>
+                                <td class="col-win-lose">96</td>
+                                <td class="col-win-lose">82</td>
+                                <td class="col-win-lose">74</td>
+                                <td class="col-record">96 / 82 / 74</td>
+                                <td>352</td>
+                                <td>38.1%</td>
+                                <td class="col-url">
+                                    <a
+                                        href="https://fconline.nexon.com/profile/stat/popup/618683725"
+                                        target="_blank"
+                                        title="https://fconline.nexon.com/profile/stat/popup/618683725"
+                                        >링크</a
+                                    >
+                                </td>
+                            </tr>
+
+                            <tr class="">
+                                <td class="col-rank">32</td>
+                                <td class="col-remark rank-no-change">-</td>
+                                <td class="col-owner-name">ES휘뚤</td>
+                                <td>256</td>
+                                <td class="col-win-lose">91</td>
+                                <td class="col-win-lose">88</td>
+                                <td class="col-win-lose">77</td>
+                                <td class="col-record">91 / 88 / 77</td>
+                                <td>296</td>
+                                <td>35.50%</td>
+                                <td class="col-url"><a href="" target="_blank" title="">N/A</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p id="main_summary_message" class="update-info">총 33개 중 33개 성공, 0개 실패.</p>
+            </div>
+
+            <p class="update-info" id="lastUpdatedInfo">데이터 마지막 최신화: 2025-09-02 18:03:49</p>
+            <p class="update-info" id="copyrightInfo">사이트 내 FC온라인 관련 모든 정보의 저작권은 EA Sports 및 NEXON에 있습니다.</p>
+        </div>
+
+        <script src="/static/results_table.js"></script>
+    </body>
+</html>

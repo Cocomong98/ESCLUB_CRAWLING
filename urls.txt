@@ -1,36 +1,114 @@
-// ES코코몽
-https://fconline.nexon.com/profile/stat/popup/1155593160
 // ES가몸지
 https://fconline.nexon.com/profile/stat/popup/1306797262
+https://fconline.nexon.com/profile/squad/popup/1306797262
 // ES스페인
 https://fconline.nexon.com/profile/stat/popup/1038218816
+https://fconline.nexon.com/profile/squad/popup/1038218816
 // ES갤럭시
 https://fconline.nexon.com/profile/stat/popup/1139108503
+https://fconline.nexon.com/profile/squad/popup/1139108503
 // ES골팝
 https://fconline.nexon.com/profile/stat/popup/1156043302
+https://fconline.nexon.com/profile/squad/popup/1156043302
 // ES구마적
 https://fconline.nexon.com/profile/stat/popup/1776675411
+https://fconline.nexon.com/profile/squad/popup/1776675411
 // ES노인
 https://fconline.nexon.com/profile/stat/popup/1390789227
+https://fconline.nexon.com/profile/squad/popup/1390789227
 // ES라야
 https://fconline.nexon.com/profile/stat/popup/350839137
+https://fconline.nexon.com/profile/squad/popup/350839137
 // ES라울
 https://fconline.nexon.com/profile/stat/popup/82044429
-// ES레지스타
+https://fconline.nexon.com/profile/squad/popup/82044429
+// ES빌바오
 https://fconline.nexon.com/profile/stat/popup/1005278322
+https://fconline.nexon.com/profile/squad/popup/1005278322
 // ES린이대디
 https://fconline.nexon.com/profile/stat/popup/551649643
+https://fconline.nexon.com/profile/squad/popup/551649643
 // ES멍웅찬
 https://fconline.nexon.com/profile/stat/popup/350583720
+https://fconline.nexon.com/profile/squad/popup/350583720
 // ES베니
 https://fconline.nexon.com/profile/stat/popup/1810251725
-// ES빼꼼
+https://fconline.nexon.com/profile/squad/popup/1810251725
+// ES맨유
 https://fconline.nexon.com/profile/stat/popup/1374062161
-// ES치악산
-https://fconline.nexon.com/profile/stat/popup/182966099
+https://fconline.nexon.com/profile/squad/popup/1374062161
 // ES칼텍스
 https://fconline.nexon.com/profile/stat/popup/1390518988
-// ES타켠
-https://fconline.nexon.com/profile/stat/popup/31914083
+https://fconline.nexon.com/profile/squad/popup/1390518988
 // FC플로버
 https://fconline.nexon.com/profile/stat/popup/887426261
+https://fconline.nexon.com/profile/squad/popup/887426261
+// ES차발
+https://fconline.nexon.com/profile/stat/popup/1793437746
+https://fconline.nexon.com/profile/squad/popup/1793437746
+// ES누고
+https://fconline.nexon.com/profile/stat/popup/1877051658
+https://fconline.nexon.com/profile/squad/popup/1877051658
+// ES동천
+https://fconline.nexon.com/profile/stat/popup/334024467
+https://fconline.nexon.com/profile/squad/popup/334024467
+// ES딱풀또복
+https://fconline.nexon.com/profile/stat/popup/618683725
+https://fconline.nexon.com/profile/squad/popup/618683725
+// ES로운
+https://fconline.nexon.com/profile/stat/popup/65220999
+https://fconline.nexon.com/profile/squad/popup/65220999
+// ES사카
+https://fconline.nexon.com/profile/stat/popup/317123047
+https://fconline.nexon.com/profile/squad/popup/317123047
+// ES소보
+https://fconline.nexon.com/profile/stat/popup/972001091
+https://fconline.nexon.com/profile/squad/popup/972001091
+// ES실크
+https://fconline.nexon.com/profile/stat/popup/1759588895
+https://fconline.nexon.com/profile/squad/popup/1759588895
+// ES차오
+https://fconline.nexon.com/profile/stat/popup/551647116
+https://fconline.nexon.com/profile/squad/popup/551647116
+// ES코코몽
+https://fconline.nexon.com/profile/stat/popup/1155593160
+https://fconline.nexon.com/profile/squad/popup/1155593160
+// ES휘뚤
+https://fconline.nexon.com/profile/stat/popup/1759662886
+https://fconline.nexon.com/profile/squad/popup/1759662886
+// FC내미스
+https://fconline.nexon.com/profile/stat/popup/1944734890
+https://fconline.nexon.com/profile/squad/popup/1944734890
+// ES파급
+https://fconline.nexon.com/profile/stat/popup/1525532472
+https://fconline.nexon.com/profile/squad/popup/1525532472
+// ES올인
+https://fconline.nexon.com/profile/stat/popup/1356954590
+https://fconline.nexon.com/profile/squad/popup/1356954590
+// ES민이
+https://fconline.nexon.com/profile/stat/popup/217286112
+https://fconline.nexon.com/profile/squad/popup/217286112
+// ES봄날
+https://fconline.nexon.com/profile/stat/popup/199243516
+https://fconline.nexon.com/profile/squad/popup/199243516
+// ES아놀드
+https://fconline.nexon.com/profile/stat/popup/501695340
+https://fconline.nexon.com/profile/squad/popup/501695340
+// ES컨
+https://fconline.nexon.com/profile/stat/popup/854250469
+https://fconline.nexon.com/profile/squad/popup/854250469
+// ES진
+https://fconline.nexon.com/profile/stat/popup/920982262
+https://fconline.nexon.com/profile/squad/popup/920982262
+// ES클론
+https://fconline.nexon.com/profile/stat/popup/736264359
+https://fconline.nexon.com/profile/squad/popup/736264359
+// ES비야 
+https://fconline.nexon.com/profile/stat/popup/603181627
+https://fconline.nexon.com/profile/squad/popup/603181627
+// ES막내
+https://fconline.nexon.com/profile/stat/popup/501909850
+https://fconline.nexon.com/profile/squad/popup/501909850
+// ES데이비드베컴
+https://fconline.nexon.com/profile/stat/popup/250869514
+https://fconline.nexon.com/profile/squad/popup/250869514
