@@ -1,3 +1,4 @@
+# 라이브러리 추가
 from flask import Flask, render_template, request, jsonify
 from selenium import webdriver
 from selenium.webdriver.common.by import By
