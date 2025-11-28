@@ -23,6 +23,7 @@ USER_FOLDER = "user"
 DISPLAY_JSON_FILE = "current_crawl_display_data.json"
 # 🚫 OUTPUT_HTML_FILE 상수는 더 이상 사용하지 않지만, 웹페이지 라우트 유지를 위해 임시로 주석 처리
 # OUTPUT_HTML_FILE = "miningleague.html" 
+# 한번에 5명씩, 실패 시 최대 10번 재시도
 MAX_WORKERS = 5 # 순차 처리 강제
 MAX_RETRIES = 10 # 재시도 횟수 설정
 
