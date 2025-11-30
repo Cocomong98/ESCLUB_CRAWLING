@@ -335,8 +335,6 @@ def index():
 
 @app.route('/results_table')
 def results_table_page():
-    # 이 라우트에서 HTML 파일을 생성하거나, JSON 파일을 읽어 즉석에서 HTML을 렌더링해야 합니다.
-    # HTML 파일 생성을 제거했으므로, DISPLAY_JSON_FILE을 읽어 즉석에서 렌더링하는 임시 로직을 사용합니다.
     try:
         if not os.path.exists(DISPLAY_JSON_FILE):
             return "데이터 없음. 먼저 크롤링을 실행하세요.", 404
