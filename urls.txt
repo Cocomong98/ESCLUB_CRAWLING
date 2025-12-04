@@ -64,9 +64,6 @@ https://fconline.nexon.com/profile/squad/popup/317123047
 // ES소보
 https://fconline.nexon.com/profile/stat/popup/972001091
 https://fconline.nexon.com/profile/squad/popup/972001091
-// ES실크
-https://fconline.nexon.com/profile/stat/popup/1759588895
-https://fconline.nexon.com/profile/squad/popup/1759588895
 // ES차오
 https://fconline.nexon.com/profile/stat/popup/551647116
 https://fconline.nexon.com/profile/squad/popup/551647116

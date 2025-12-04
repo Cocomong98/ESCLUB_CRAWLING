@@ -8,10 +8,11 @@
     </head>
     <body>
         <div class="container">
-            <h1>FC 온라인 감독모드 전적 크롤러</h1>
-            <p>`urls.txt` 파일에 등록된 구단주들의 감독모드 전적을 크롤링하여 테이블로 표시합니다.</p>
-            <p>크롤링은 시간이 오래 걸릴 수 있으므로 잠시 기다려주세요.</p>
+            <h1>FC 온라인 감독모드 전적 분석기</h1>
+            <p>버튼을 클릭하여 `urls.txt`에 등록된 구단주들의 감독모드 전적 크롤링을 시작하세요. 최신 데이터를 가져와 순위를 업데이트합니다.</p>
+            <p>데이터 수집에는 몇 분 정도 소요될 수 있습니다. 잠시만 기다려주세요!</p>
             <button id="startCrawlBtn">크롤링 시작</button>
+            <div class="loader" id="loader"></div>
 
             <p id="statusMessage"></p>
             <div id="resultsOutput"></div>

@@ -2,12 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const startCrawlBtn = document.getElementById("startCrawlBtn");
     const statusMessage = document.getElementById("statusMessage");
     const resultsOutput = document.getElementById("resultsOutput");
+    const loader = document.getElementById("loader");
 
     if (startCrawlBtn) {
         startCrawlBtn.addEventListener("click", async () => {
             statusMessage.textContent = "크롤링 요청을 보냈습니다. 서버에서 데이터를 가져오는 중... (시간이 오래 걸릴 수 있습니다.)";
-            resultsOutput.innerHTML = "<p>데이터를 처리 중입니다...</p>";
+            resultsOutput.innerHTML = "";
             startCrawlBtn.disabled = true;
+            loader.style.display = "block";
 
             try {
                 const response = await fetch("/crawl", {
@@ -34,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Fetch error:", error);
             } finally {
                 startCrawlBtn.disabled = false;
+                loader.style.display = "none";
             }
         });
     }
